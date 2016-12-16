@@ -16,6 +16,7 @@ namespace O2System\Cache\Adapters\Apc;
 
 use O2System\Cache\Item;
 use O2System\Kernel\Spl\Exceptions\Logic\InvalidArgumentException;
+use O2System\Kernel\Spl\Exceptions\Logic\OutOfRangeException;
 use O2System\Psr\Cache\CacheItemInterface;
 
 /**
@@ -79,8 +80,8 @@ class ItemPool extends Adapter
      * @param string $key
      *   The key for which to return the corresponding Cache Item.
      *
-     * @throws InvalidArgumentException
-     *   If the $key string is not a legal value a \Psr\Cache\InvalidArgumentException
+     * @throws OutOfRangeException
+     *   If the $key string is not a legal value a OutOfRangeException
      *   MUST be thrown.
      *
      * @return CacheItemInterface
@@ -89,7 +90,7 @@ class ItemPool extends Adapter
     public function getItem ( $key )
     {
         if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( "Error Processing Request", 1 );
+            throw new OutOfRangeException( "Error Processing Request", 1 );
         }
 
         $success = false;
