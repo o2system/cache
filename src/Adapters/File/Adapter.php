@@ -16,8 +16,8 @@ namespace O2System\Cache\Adapters\File;
 
 use O2System\Cache\Abstracts\AbstractAdapter;
 use O2System\Cache\Registries\Config;
-use O2System\Kernel\Spl\Exceptions\Logic\InvalidArgumentException;
-use O2System\Kernel\Spl\Exceptions\Runtime\OverflowException;
+use O2System\Spl\Exceptions\Logic\InvalidArgumentException;
+use O2System\Spl\Exceptions\Runtime\OverflowException;
 use O2System\Spl\Info\SplDirectoryInfo;
 
 /**
@@ -48,7 +48,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @param \O2System\Cache\Registries\Config|NULL $config
      *
-     * @throws \O2System\Kernel\Spl\Exceptions\Runtime\OverflowException
+     * @throws \O2System\Spl\Exceptions\Runtime\OverflowException
      */
     public function __construct ( Config $config = null )
     {
@@ -114,7 +114,7 @@ abstract class Adapter extends AbstractAdapter
     {
         if ( ! is_writable( $this->path ) ) {
             if ( ! file_exists( $this->path ) ) {
-                @mkdir( $this->path, 0777, true );
+                mkdir( $this->path, 0777, true );
             }
         }
 
@@ -132,7 +132,7 @@ abstract class Adapter extends AbstractAdapter
      * @param int    $step Increment step to add.
      *
      * @return mixed New value on success or FALSE on failure.
-     * @throws \O2System\Kernel\Spl\Exceptions\Logic\InvalidArgumentException
+     * @throws \O2System\Spl\Exceptions\Logic\InvalidArgumentException
      * @throws \O2System\Psr\Cache\InvalidArgumentException
      */
     public function increment ( $key, $step = 1 )
@@ -169,7 +169,7 @@ abstract class Adapter extends AbstractAdapter
      * @param int    $step Decrement step to add.
      *
      * @return mixed New value on success or FALSE on failure.
-     * @throws \O2System\Kernel\Spl\Exceptions\Logic\InvalidArgumentException
+     * @throws \O2System\Spl\Exceptions\Logic\InvalidArgumentException
      * @throws \O2System\Psr\Cache\InvalidArgumentException
      */
     public function decrement ( $key, $step = 1 )

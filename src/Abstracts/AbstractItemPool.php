@@ -14,7 +14,7 @@ namespace O2System\Cache\Abstracts;
 
 // ------------------------------------------------------------------------
 
-use O2System\Kernel\Spl\Exceptions\Logic\InvalidArgumentException;
+use O2System\Spl\Exceptions\Logic\InvalidArgumentException;
 use O2System\Psr\Cache\CacheItemInterface;
 use O2System\Psr\Cache\CacheItemPoolInterface;
 
@@ -43,7 +43,7 @@ abstract class AbstractItemPool implements CacheItemPoolInterface
      *   An array of keys that should be removed from the pool.
      *
      * @return bool
-     * @throws \O2System\Kernel\Spl\Exceptions\Logic\InvalidArgumentException
+     * @throws \O2System\Spl\Exceptions\Logic\InvalidArgumentException
      * @throws \O2System\Psr\Cache\InvalidArgumentException
      */
     public function deleteItems ( array $keys )

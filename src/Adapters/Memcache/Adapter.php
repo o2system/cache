@@ -16,7 +16,7 @@ namespace O2System\Cache\Adapters\Memcache;
 
 use O2System\Cache\Abstracts\AbstractAdapter;
 use O2System\Cache\Registries\Config;
-use O2System\Kernel\Spl\Exceptions\BadMethodCallException;
+use O2System\Spl\Exceptions\BadMethodCallException;
 
 /**
  * Class Adapter

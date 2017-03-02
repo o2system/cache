@@ -14,8 +14,8 @@ namespace O2System\Cache\Abstracts;
 
 // ------------------------------------------------------------------------
 
+use O2System\Cache\Exception;
 use O2System\Cache\Registries\Config;
-use O2System\Kernel\Spl\Exceptions\Logic\BadFunctionCall\BadPhpExtensionCallException;
 use O2System\Psr\Cache\CacheItemPoolAdapterInterface;
 
 /**
@@ -54,7 +54,7 @@ abstract class AbstractAdapter extends AbstractItemPool implements CacheItemPool
      * @param \O2System\Cache\Registries\Config|NULL $config
      *
      * @return AbstractAdapter
-     * @throws BadPhpExtensionCallException
+     * @throws Exception
      */
     public function __construct ( Config $config = null )
     {
@@ -66,7 +66,7 @@ abstract class AbstractAdapter extends AbstractItemPool implements CacheItemPool
                     $this->setPrefixKey( $config->prefixKey );
                 }
             } else {
-                throw new BadPhpExtensionCallException( 'E_MESSAGE_CACHE_UNSUPPORTED_ADAPTER', 0, [ $this->platform ] );
+                throw new Exception( 'E_MESSAGE_CACHE_UNSUPPORTED_ADAPTER', 0, [ $this->platform ] );
             }
         }
     }

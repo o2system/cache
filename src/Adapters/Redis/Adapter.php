@@ -15,8 +15,8 @@ namespace O2System\Cache\Adapters\Redis;
 // ------------------------------------------------------------------------
 
 use O2System\Cache\Abstracts\AbstractAdapter;
-use O2System\Kernel\Spl\Exceptions\Logic\DomainException;
-use O2System\Kernel\Spl\Exceptions\RuntimeException;
+use O2System\Spl\Exceptions\Logic\DomainException;
+use O2System\Spl\Exceptions\RuntimeException;
 
 /**
  * Class Adapter

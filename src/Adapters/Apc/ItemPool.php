@@ -15,8 +15,8 @@ namespace O2System\Cache\Adapters\Apc;
 // ------------------------------------------------------------------------
 
 use O2System\Cache\Item;
-use O2System\Kernel\Spl\Exceptions\Logic\InvalidArgumentException;
-use O2System\Kernel\Spl\Exceptions\Logic\OutOfRangeException;
+use O2System\Spl\Exceptions\Logic\InvalidArgumentException;
+use O2System\Spl\Exceptions\Logic\OutOfRangeException;
 use O2System\Psr\Cache\CacheItemInterface;
 
 /**

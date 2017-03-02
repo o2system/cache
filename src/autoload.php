@@ -18,7 +18,7 @@
 spl_autoload_register(
     function ( $className ) {
         if ( $className === 'O2System\Cache' ) {
-            require __DIR__ . '/Cache.php';
+            require __DIR__ . DIRECTORY_SEPARATOR . 'Cache.php';
         } elseif ( strpos( $className, 'O2System\Cache\\' ) === false ) {
             return;
         }

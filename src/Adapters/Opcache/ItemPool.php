@@ -15,7 +15,7 @@ namespace O2System\Cache\Adapters\Opcache;
 // ------------------------------------------------------------------------
 
 use O2System\Cache\Item;
-use O2System\Kernel\Spl\Exceptions\Logic\InvalidArgumentException;
+use O2System\Spl\Exceptions\Logic\InvalidArgumentException;
 use O2System\Psr\Cache\CacheItemInterface;
 
 /**
@@ -51,8 +51,8 @@ class ItemPool extends Adapter
 
         $items = [ ];
 
-        if ( empty( $keys ) AND class_exists( 'APCIterator', false ) ) {
-            $apcIterator = new \APCIterator( 'user' );
+        if ( empty( $keys ) AND class_exists( 'APCUIterator', false ) ) {
+            $apcIterator = new \APCUIterator();
 
             foreach ( $apcIterator as $item ) {
                 $items[] = new Item( str_replace( $this->prefixKey, '', $item[ 'key' ] ), $item[ 'value' ] );
@@ -94,7 +94,7 @@ class ItemPool extends Adapter
 
         $success = false;
 
-        $metadata = apc_fetch( $this->prefixKey . $key, $success );
+        $metadata = apcu_fetch( $this->prefixKey . $key, $success );
 
         return new Item( $key, $metadata );
     }
@@ -126,7 +126,7 @@ class ItemPool extends Adapter
             throw new InvalidArgumentException( 'E_HEADER_INVALIDARGUMENTEXCEPTION' );
         }
 
-        return (bool) apc_exists( $this->prefixKey . $key );
+        return (bool) apcu_exists( $this->prefixKey . $key );
     }
 
     // ------------------------------------------------------------------------
@@ -144,7 +144,7 @@ class ItemPool extends Adapter
         // Resets the contents of the opcode cache
         opcache_reset();
 
-        return apc_clear_cache( 'user' );
+        return apcu_clear_cache( 'user' );
     }
 
     // ------------------------------------------------------------------------
@@ -170,7 +170,7 @@ class ItemPool extends Adapter
             throw new InvalidArgumentException( 'E_HEADER_INVALIDARGUMENTEXCEPTION' );
         }
 
-        return apc_delete( $this->prefixKey . $key );
+        return apcu_delete( $this->prefixKey . $key );
     }
 
     // ------------------------------------------------------------------------
@@ -191,6 +191,6 @@ class ItemPool extends Adapter
         $metadata = $item->getMetadata();
         $metadata[ 'data' ] = $item->get();
 
-        return apc_store( $this->prefixKey . $item->getKey(), $metadata, $metadata[ 'ttl' ] );
+        return apcu_store( $this->prefixKey . $item->getKey(), $metadata, $metadata[ 'ttl' ] );
     }
 }
