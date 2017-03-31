@@ -19,6 +19,7 @@ use O2System\Spl\Exceptions\RuntimeException;
 
 /**
  * Class Exception
+ *
  * @package O2System\Cache
  */
 class Exception extends RuntimeException implements CacheException

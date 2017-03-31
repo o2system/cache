@@ -15,9 +15,9 @@ namespace O2System\Cache\Adapters\File;
 // ------------------------------------------------------------------------
 
 use O2System\Cache\Item;
-use O2System\Spl\Exceptions\Logic\InvalidArgumentException;
 use O2System\Psr\Cache\CacheItemInterface;
 use O2System\Psr\Cache\CacheItemPoolInterface;
+use O2System\Spl\Exceptions\Logic\InvalidArgumentException;
 
 /**
  * Class ItemPool
@@ -44,13 +44,13 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      *   key is not found. However, if no keys are specified then an empty
      *   traversable MUST be returned instead.
      */
-    public function getItems ( array $keys = [ ] )
+    public function getItems( array $keys = [] )
     {
         if ( ! is_array( $keys ) ) {
             throw new InvalidArgumentException( 'E_HEADER_INVALIDARGUMENTEXCEPTION' );
         }
 
-        $items = [ ];
+        $items = [];
 
         if ( empty( $keys ) ) {
             $directory = new \RecursiveIteratorIterator(
@@ -94,7 +94,7 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      * @return CacheItemInterface
      *   The corresponding Cache Item.
      */
-    public function getItem ( $key )
+    public function getItem( $key )
     {
         if ( ! is_string( $key ) ) {
             throw new InvalidArgumentException( 'E_HEADER_INVALIDARGUMENTEXCEPTION' );
@@ -136,7 +136,7 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      * @return bool
      *   True if item exists in the cache, false otherwise.
      */
-    public function hasItem ( $key )
+    public function hasItem( $key )
     {
         if ( ! is_string( $key ) ) {
             throw new InvalidArgumentException( 'E_HEADER_INVALIDARGUMENTEXCEPTION' );
@@ -144,7 +144,7 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
 
         $filename = $this->path . $key . '.cache';
 
-        return (bool) is_file( $filename );
+        return (bool)is_file( $filename );
     }
 
     // ------------------------------------------------------------------------
@@ -157,7 +157,7 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      * @return bool
      *   True if the pool was successfully cleared. False if there was an error.
      */
-    public function clear ()
+    public function clear()
     {
         $directory = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator( $this->path ),
@@ -197,7 +197,7 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      * @return bool
      *   True if the item was successfully removed. False if there was an error.
      */
-    public function deleteItem ( $key )
+    public function deleteItem( $key )
     {
         if ( ! is_string( $key ) ) {
             throw new InvalidArgumentException( 'E_HEADER_INVALIDARGUMENTEXCEPTION' );
@@ -225,7 +225,7 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      * @return bool
      *   True if the item was successfully persisted. False if there was an error.
      */
-    public function save ( CacheItemInterface $item )
+    public function save( CacheItemInterface $item )
     {
         $metadata = $item->getMetadata();
         $metadata[ 'data' ] = $item->get();
@@ -248,6 +248,6 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
         flock( $fp, LOCK_UN );
         fclose( $fp );
 
-        return (bool) is_int( $result );
+        return (bool)is_int( $result );
     }
 }

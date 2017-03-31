@@ -15,7 +15,7 @@ namespace O2System\Cache\Adapters\Memcache;
 // ------------------------------------------------------------------------
 
 use O2System\Cache\Abstracts\AbstractAdapter;
-use O2System\Cache\Registries\Config;
+use O2System\Cache\Datastructures\Config;
 use O2System\Spl\Exceptions\BadMethodCallException;
 
 /**
@@ -50,7 +50,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return Adapter
      */
-    public function __construct ( Config $config = null )
+    public function __construct( Config $config = null )
     {
         if ( isset( $config ) ) {
             if ( $this->isSupported() ) {
@@ -61,7 +61,7 @@ abstract class Adapter extends AbstractAdapter
                 }
             }
         } elseif ( $this->isSupported() ) {
-            $this->connect( [ ] );
+            $this->connect( [] );
         }
     }
 
@@ -74,9 +74,9 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return bool Returns FALSE if not supported.
      */
-    public function isSupported ()
+    public function isSupported()
     {
-        return (bool) ( extension_loaded( 'memcache' ) && class_exists( 'Memcache', false ) );
+        return (bool)( extension_loaded( 'memcache' ) && class_exists( 'Memcache', false ) );
     }
 
     // ------------------------------------------------------------------------
@@ -88,7 +88,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return void
      */
-    public function connect ( array $config )
+    public function connect( array $config )
     {
         $this->memcache = new \Memcache();
 
@@ -195,7 +195,7 @@ abstract class Adapter extends AbstractAdapter
      * @return mixed
      * @throws \O2System\Cache\Exceptions\BadMethodCallException
      */
-    public function __call ( $method, array $arguments = [ ] )
+    public function __call( $method, array $arguments = [] )
     {
         if ( method_exists( $this, $method ) ) {
             return call_user_func_array( [ &$this, $method ], $arguments );
@@ -218,7 +218,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed New value on success or FALSE on failure.
      */
-    public function increment ( $key, $step = 1 )
+    public function increment( $key, $step = 1 )
     {
         return $this->memcache->increment( $this->prefixKey . $key, $step );
     }
@@ -235,7 +235,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed New value on success or FALSE on failure.
      */
-    public function decrement ( $key, $step = 1 )
+    public function decrement( $key, $step = 1 )
     {
         return $this->memcache->decrement( $this->prefixKey . $key, $step );
     }
@@ -249,7 +249,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed
      */
-    public function getInfo ()
+    public function getInfo()
     {
         return [
             'version' => $this->memcache->getVersion(),
@@ -265,7 +265,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed
      */
-    public function getStats ()
+    public function getStats()
     {
         return $this->memcache->getExtendedStats();
     }

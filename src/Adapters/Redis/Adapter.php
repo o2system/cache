@@ -49,7 +49,7 @@ abstract class Adapter extends AbstractAdapter
      * @return void
      * @throws \O2System\Cache\Exceptions\AdapterException
      */
-    public function connect ( array $config )
+    public function connect( array $config )
     {
         $this->config = array_merge(
             [
@@ -81,8 +81,7 @@ abstract class Adapter extends AbstractAdapter
             if ( isset( $this->config[ 'dbIndex' ] ) AND ! $this->redis->select( $this->config[ 'dbIndex' ] ) ) {
                 throw new RuntimeException( 'E_REDIS_ADAPTER_DB_CONNECTION_FAILED' );
             }
-        }
-        catch ( \RedisException $e ) {
+        } catch ( \RedisException $e ) {
             throw new RuntimeException( 'E_REDIS_ADAPTER_CONNECTION_REFUSED', $e->getCode(), [ $e->getMessage() ] );
         }
     }
@@ -103,7 +102,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed New value on success or FALSE on failure.
      */
-    public function increment ( $key, $step = 1 )
+    public function increment( $key, $step = 1 )
     {
         if ( ! is_string( $key ) ) {
             throw new InvalidArgumentException( 'E_HEADER_INVALIDARGUMENTEXCEPTION' );
@@ -128,7 +127,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed New value on success or FALSE on failure.
      */
-    public function decrement ( $key, $step = 1 )
+    public function decrement( $key, $step = 1 )
     {
         if ( ! is_string( $key ) ) {
             throw new InvalidArgumentException( 'E_HEADER_INVALIDARGUMENTEXCEPTION' );
@@ -146,7 +145,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed
      */
-    public function getInfo ()
+    public function getInfo()
     {
         return call_user_func_array( [ &$this->redis, 'info' ], func_get_args() );
     }
@@ -160,7 +159,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed
      */
-    public function getStats ()
+    public function getStats()
     {
         return $this->redis->info( 'stats' );
     }
@@ -174,8 +173,8 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return bool Returns FALSE if not supported.
      */
-    public function isSupported ()
+    public function isSupported()
     {
-        return (bool) ( extension_loaded( 'redis' ) && class_exists( 'Redis', false ) );
+        return (bool)( extension_loaded( 'redis' ) && class_exists( 'Redis', false ) );
     }
 }

@@ -15,7 +15,7 @@ namespace O2System\Cache\Adapters\File;
 // ------------------------------------------------------------------------
 
 use O2System\Cache\Abstracts\AbstractAdapter;
-use O2System\Cache\Registries\Config;
+use O2System\Cache\Datastructures\Config;
 use O2System\Spl\Exceptions\Logic\InvalidArgumentException;
 use O2System\Spl\Exceptions\Runtime\OverflowException;
 use O2System\Spl\Info\SplDirectoryInfo;
@@ -46,16 +46,16 @@ abstract class Adapter extends AbstractAdapter
     /**
      * Adapter::__construct
      *
-     * @param \O2System\Cache\Registries\Config|NULL $config
+     * @param \O2System\Cache\Datastructures\Config|NULL $config
      *
      * @throws \O2System\Spl\Exceptions\Runtime\OverflowException
      */
-    public function __construct ( Config $config = null )
+    public function __construct( Config $config = null )
     {
         if ( isset( $config ) ) {
             $config = $config->getArrayCopy();
         } elseif ( is_null( $config ) ) {
-            $config = [ ];
+            $config = [];
         }
 
         $this->connect( $config );
@@ -69,7 +69,7 @@ abstract class Adapter extends AbstractAdapter
      * @return void
      * @throws OverflowException
      */
-    public function connect ( array $config )
+    public function connect( array $config )
     {
         if ( isset( $config[ 'path' ] ) ) {
             $config[ 'path' ] = str_replace( [ '\\', '/' ], DIRECTORY_SEPARATOR, $config[ 'path' ] );
@@ -110,7 +110,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return bool Returns FALSE if not supported.
      */
-    public function isSupported ()
+    public function isSupported()
     {
         if ( ! is_writable( $this->path ) ) {
             if ( ! file_exists( $this->path ) ) {
@@ -118,7 +118,7 @@ abstract class Adapter extends AbstractAdapter
             }
         }
 
-        return (bool) is_writable( $this->path );
+        return (bool)is_writable( $this->path );
     }
 
     // ------------------------------------------------------------------------
@@ -135,7 +135,7 @@ abstract class Adapter extends AbstractAdapter
      * @throws \O2System\Spl\Exceptions\Logic\InvalidArgumentException
      * @throws \O2System\Psr\Cache\InvalidArgumentException
      */
-    public function increment ( $key, $step = 1 )
+    public function increment( $key, $step = 1 )
     {
         if ( ! is_string( $key ) ) {
             throw new InvalidArgumentException( 'E_HEADER_INVALIDARGUMENTEXCEPTION' );
@@ -172,7 +172,7 @@ abstract class Adapter extends AbstractAdapter
      * @throws \O2System\Spl\Exceptions\Logic\InvalidArgumentException
      * @throws \O2System\Psr\Cache\InvalidArgumentException
      */
-    public function decrement ( $key, $step = 1 )
+    public function decrement( $key, $step = 1 )
     {
         if ( ! is_string( $key ) ) {
             throw new InvalidArgumentException( 'E_HEADER_INVALIDARGUMENTEXCEPTION' );
@@ -204,7 +204,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed
      */
-    public function getInfo ()
+    public function getInfo()
     {
         return new SplDirectoryInfo( $this->path );
     }
@@ -218,7 +218,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed
      */
-    public function getStats ()
+    public function getStats()
     {
         $directory = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator( $this->path ),

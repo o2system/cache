@@ -15,7 +15,7 @@ namespace O2System\Cache\Abstracts;
 // ------------------------------------------------------------------------
 
 use O2System\Cache\Exception;
-use O2System\Cache\Registries\Config;
+use O2System\Cache\Datastructures\Config;
 use O2System\Psr\Cache\CacheItemPoolAdapterInterface;
 
 /**
@@ -37,7 +37,7 @@ abstract class AbstractAdapter extends AbstractItemPool implements CacheItemPool
      *
      * @var array
      */
-    protected $config = [ ];
+    protected $config = [];
 
     /**
      * Adapter Prefix Key
@@ -51,12 +51,12 @@ abstract class AbstractAdapter extends AbstractItemPool implements CacheItemPool
     /**
      * AbstractAdapter::__construct
      *
-     * @param \O2System\Cache\Registries\Config|NULL $config
+     * @param \O2System\Cache\Datastructures\Config|NULL $config
      *
      * @return AbstractAdapter
      * @throws Exception
      */
-    public function __construct ( Config $config = null )
+    public function __construct( Config $config = null )
     {
         if ( isset( $config ) ) {
             if ( $this->isSupported() ) {
@@ -80,7 +80,7 @@ abstract class AbstractAdapter extends AbstractItemPool implements CacheItemPool
      *
      * @param $prefixKey
      */
-    public function setPrefixKey ( $prefixKey )
+    public function setPrefixKey( $prefixKey )
     {
         $this->prefixKey = rtrim( $prefixKey, ':' ) . ':';
     }
@@ -94,7 +94,7 @@ abstract class AbstractAdapter extends AbstractItemPool implements CacheItemPool
      *
      * @return string
      */
-    public function getPlatform ()
+    public function getPlatform()
     {
         return $this->platform;
     }

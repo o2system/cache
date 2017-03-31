@@ -14,9 +14,9 @@ namespace O2System\Cache\Abstracts;
 
 // ------------------------------------------------------------------------
 
-use O2System\Spl\Exceptions\Logic\InvalidArgumentException;
 use O2System\Psr\Cache\CacheItemInterface;
 use O2System\Psr\Cache\CacheItemPoolInterface;
+use O2System\Spl\Exceptions\Logic\InvalidArgumentException;
 
 /**
  * Class AbstractItemPool
@@ -30,7 +30,7 @@ abstract class AbstractItemPool implements CacheItemPoolInterface
      *
      * @var array
      */
-    private $storage = [ ];
+    private $storage = [];
 
     // ------------------------------------------------------------------------
 
@@ -46,7 +46,7 @@ abstract class AbstractItemPool implements CacheItemPoolInterface
      * @throws \O2System\Spl\Exceptions\Logic\InvalidArgumentException
      * @throws \O2System\Psr\Cache\InvalidArgumentException
      */
-    public function deleteItems ( array $keys )
+    public function deleteItems( array $keys )
     {
         if ( ! is_array( $keys ) ) {
             throw new InvalidArgumentException( 'E_HEADER_INVALIDARGUMENTEXCEPTION' );
@@ -75,7 +75,7 @@ abstract class AbstractItemPool implements CacheItemPoolInterface
      * @return bool
      *   False if the item could not be queued or if a commit was attempted and failed. True otherwise.
      */
-    public function saveDeferred ( CacheItemInterface $item )
+    public function saveDeferred( CacheItemInterface $item )
     {
         $this->storage[] = $item;
     }
@@ -90,7 +90,7 @@ abstract class AbstractItemPool implements CacheItemPoolInterface
      * @return bool
      *   True if all not-yet-saved items were successfully saved or there were none. False otherwise.
      */
-    public function commit ()
+    public function commit()
     {
         $storage = $this->storage;
 
@@ -101,7 +101,7 @@ abstract class AbstractItemPool implements CacheItemPoolInterface
         }
 
         if ( count( $storage ) == 0 ) {
-            $this->storage = [ ];
+            $this->storage = [];
 
             return true;
         }

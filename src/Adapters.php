@@ -30,18 +30,18 @@ class Adapters extends AbstractObjectRegistryPattern implements CacheItemPoolInt
     /**
      * Adapters::__construct
      *
-     * @param Registries\Config $config
+     * @param Datastructures\Config $config
      *
      * @return Adapters
      */
-    public function __construct(Registries\Config $config)
+    public function __construct( Datastructures\Config $config )
     {
-        if ($config->offsetExists('default')) {
-            foreach ($config as $poolOffset => $poolConfig) {
-                $this->createItemPool($poolOffset, $poolConfig);
+        if ( $config->offsetExists( 'default' ) ) {
+            foreach ( $config as $poolOffset => $poolConfig ) {
+                $this->createItemPool( $poolOffset, $poolConfig );
             }
-        } elseif ($config->offsetExists('adapter')) {
-            $this->createItemPool('default', $config);
+        } elseif ( $config->offsetExists( 'adapter' ) ) {
+            $this->createItemPool( 'default', $config );
         }
     }
 
@@ -52,30 +52,30 @@ class Adapters extends AbstractObjectRegistryPattern implements CacheItemPoolInt
      *
      * Create Item Pool
      *
-     * @param string $poolOffset
-     * @param Registries\Config $poolConfig
+     * @param string                $poolOffset
+     * @param Datastructures\Config $poolConfig
      */
-    public function createItemPool($poolOffset, Registries\Config $poolConfig)
+    public function createItemPool( $poolOffset, Datastructures\Config $poolConfig )
     {
-        $adapterClassName = '\O2System\Cache\Adapters\\' . ucfirst($poolConfig->adapter) . '\ItemPool';
+        $adapterClassName = '\O2System\Cache\Adapters\\' . ucfirst( $poolConfig->adapter ) . '\ItemPool';
 
-        if (class_exists($adapterClassName)) {
-            $adapter = new $adapterClassName($poolConfig);
+        if ( class_exists( $adapterClassName ) ) {
+            $adapter = new $adapterClassName( $poolConfig );
 
-            $this->register($adapter, $poolOffset);
+            $this->register( $adapter, $poolOffset );
         }
     }
 
     // ------------------------------------------------------------------------
 
-    public function &getItemPool($poolOffset)
+    public function &getItemPool( $poolOffset )
     {
-        return $this->getObject($poolOffset);
+        return $this->getObject( $poolOffset );
     }
 
-    public function hasItemPool($poolOffset)
+    public function hasItemPool( $poolOffset )
     {
-        return $this->__isset($poolOffset);
+        return $this->__isset( $poolOffset );
     }
 
     /**
@@ -87,9 +87,9 @@ class Adapters extends AbstractObjectRegistryPattern implements CacheItemPoolInt
      *
      * @return bool
      */
-    public function isValid($value)
+    public function isValid( $value )
     {
-        if ($value instanceof AbstractItemPool) {
+        if ( $value instanceof AbstractItemPool ) {
             return true;
         }
 
@@ -116,9 +116,9 @@ class Adapters extends AbstractObjectRegistryPattern implements CacheItemPoolInt
      * @return CacheItemInterface
      *   The corresponding Cache Item.
      */
-    public function getItem($key)
+    public function getItem( $key )
     {
-        return $this->default->getItem($key);
+        return $this->default->getItem( $key );
     }
 
     // ------------------------------------------------------------------------
@@ -141,9 +141,9 @@ class Adapters extends AbstractObjectRegistryPattern implements CacheItemPoolInt
      *   key is not found. However, if no keys are specified then an empty
      *   traversable MUST be returned instead.
      */
-    public function getItems(array $keys = [])
+    public function getItems( array $keys = [] )
     {
-        return $this->default->getItems($keys);
+        return $this->default->getItems( $keys );
     }
 
     // ------------------------------------------------------------------------
@@ -167,9 +167,9 @@ class Adapters extends AbstractObjectRegistryPattern implements CacheItemPoolInt
      * @return bool
      *   True if item exists in the cache, false otherwise.
      */
-    public function hasItem($key)
+    public function hasItem( $key )
     {
-        return $this->default->hasItem($key);
+        return $this->default->hasItem( $key );
     }
 
     // ------------------------------------------------------------------------
@@ -204,9 +204,9 @@ class Adapters extends AbstractObjectRegistryPattern implements CacheItemPoolInt
      * @return bool
      *   True if the item was successfully removed. False if there was an error.
      */
-    public function deleteItem($key)
+    public function deleteItem( $key )
     {
-        return $this->default->deleteItem($key);
+        return $this->default->deleteItem( $key );
     }
 
     // ------------------------------------------------------------------------
@@ -226,9 +226,9 @@ class Adapters extends AbstractObjectRegistryPattern implements CacheItemPoolInt
      * @return bool
      *   True if the items were successfully removed. False if there was an error.
      */
-    public function deleteItems(array $keys = [])
+    public function deleteItems( array $keys = [] )
     {
-        return $this->default->deleteItems($keys);
+        return $this->default->deleteItems( $keys );
     }
 
     // ------------------------------------------------------------------------
@@ -244,9 +244,9 @@ class Adapters extends AbstractObjectRegistryPattern implements CacheItemPoolInt
      * @return bool
      *   True if the item was successfully persisted. False if there was an error.
      */
-    public function save(CacheItemInterface $item)
+    public function save( CacheItemInterface $item )
     {
-        return $this->default->save($item);
+        return $this->default->save( $item );
     }
 
     // ------------------------------------------------------------------------
@@ -262,9 +262,9 @@ class Adapters extends AbstractObjectRegistryPattern implements CacheItemPoolInt
      * @return bool
      *   False if the item could not be queued or if a commit was attempted and failed. True otherwise.
      */
-    public function saveDeferred(CacheItemInterface $item)
+    public function saveDeferred( CacheItemInterface $item )
     {
-        return $this->default->saveDeferred($item);
+        return $this->default->saveDeferred( $item );
     }
 
     // ------------------------------------------------------------------------

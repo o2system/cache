@@ -39,7 +39,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return void
      */
-    public function connect ( array $config )
+    public function connect( array $config )
     {
         $this->config = $config;
 
@@ -58,7 +58,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return bool
      */
-    public function increment ( $key, $step = 1 )
+    public function increment( $key, $step = 1 )
     {
         $success = false;
         apcu_inc( $this->prefixKey . $key, $step, $success );
@@ -78,7 +78,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed New value on success or FALSE on failure.
      */
-    public function decrement ( $key, $step = 1 )
+    public function decrement( $key, $step = 1 )
     {
         $success = false;
         apcu_dec( $this->prefixKey . $key, $step, $success );
@@ -95,7 +95,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed
      */
-    public function getInfo ()
+    public function getInfo()
     {
         @list( $limited ) = func_get_args();
 
@@ -111,7 +111,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed
      */
-    public function getStats ()
+    public function getStats()
     {
         @list( $limited ) = func_get_args();
 
@@ -127,8 +127,8 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return bool Returns FALSE if not supported.
      */
-    public function isSupported ()
+    public function isSupported()
     {
-        return (bool) ( extension_loaded( 'apcu' ) && ini_get( 'apc.enabled' ) );
+        return (bool)( extension_loaded( 'apcu' ) && ini_get( 'apc.enabled' ) );
     }
 }

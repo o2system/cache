@@ -76,7 +76,7 @@ class Item implements CacheItemInterface
      *
      * @return Item
      */
-    public function __construct ( $key, $value = null, $expiresAfter = 300 )
+    public function __construct( $key, $value = null, $expiresAfter = 300 )
     {
         // Set item key
         $this->key = $key;
@@ -118,7 +118,7 @@ class Item implements CacheItemInterface
      * @return static
      *   The invoked object.
      */
-    public function set ( $value )
+    public function set( $value )
     {
         $this->value = $value;
 
@@ -146,7 +146,7 @@ class Item implements CacheItemInterface
      * @return static
      *   The called object.
      */
-    public function expiresAfter ( $time = null )
+    public function expiresAfter( $time = null )
     {
         $time = is_null( $time ) ? 300 : $time;
 
@@ -179,7 +179,7 @@ class Item implements CacheItemInterface
      * @return static
      *   The called object.
      */
-    public function expiresAt ( \DateTimeInterface $expiration = null )
+    public function expiresAt( \DateTimeInterface $expiration = null )
     {
         $this->expiresAt = isset( $expiration ) ? $expiration : new \DateTime();
 
@@ -199,7 +199,7 @@ class Item implements CacheItemInterface
      * @return string
      *   The key string for this cache item.
      */
-    public function getKey ()
+    public function getKey()
     {
         return $this->key;
     }
@@ -220,7 +220,7 @@ class Item implements CacheItemInterface
      * @return mixed
      *   The value corresponding to this cache item's key, or null if not found.
      */
-    public function get ()
+    public function get()
     {
         if ( $this->isHit() ) {
             return $this->value;
@@ -242,7 +242,7 @@ class Item implements CacheItemInterface
      * @return bool
      *   True if the request resulted in a cache hit. False otherwise.
      */
-    public function isHit ()
+    public function isHit()
     {
         return $this->isHit;
     }
@@ -261,7 +261,7 @@ class Item implements CacheItemInterface
      *
      * @return array
      */
-    public function getMetadata ()
+    public function getMetadata()
     {
         $createdTime = $this->createdAt->format( 'U' );
 

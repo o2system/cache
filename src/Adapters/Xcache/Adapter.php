@@ -39,7 +39,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return void
      */
-    public function connect ( array $config )
+    public function connect( array $config )
     {
         $this->config = $config;
 
@@ -58,7 +58,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed New value on success or FALSE on failure.
      */
-    public function increment ( $key, $step = 1 )
+    public function increment( $key, $step = 1 )
     {
         return xcache_inc( $this->prefixKey . $key, $step );
     }
@@ -75,7 +75,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed New value on success or FALSE on failure.
      */
-    public function decrement ( $key, $step = 1 )
+    public function decrement( $key, $step = 1 )
     {
         return xcache_dec( $this->prefixKey . $key, $step );
     }
@@ -89,7 +89,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed
      */
-    public function getInfo ()
+    public function getInfo()
     {
         return xcache_list( XC_TYPE_VAR, 0 );
     }
@@ -103,7 +103,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed
      */
-    public function getStats ()
+    public function getStats()
     {
         return xcache_info( XC_TYPE_VAR, 0 );
     }
@@ -117,8 +117,8 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return bool Returns FALSE if not supported.
      */
-    public function isSupported ()
+    public function isSupported()
     {
-        return (bool) extension_loaded( 'xcache' );
+        return (bool)extension_loaded( 'xcache' );
     }
 }
