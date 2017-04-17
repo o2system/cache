@@ -1,15 +1,16 @@
 # O2System Cache
-[O2System Session](https://github.com/o2system/cache) is an Open Source Native PHP Session Management Handler Library. 
-Allows different cache storage platform to be used. 
-All but file-based storage require specific server requirements, and a Fatal Exception will be thrown if server requirements are not met.
+O2System Cache is an Open Source Cache Management Driver Library. 
+Wrappers around some of the most popular cache storage engine. 
+All but file-based caching require specific server requirements, and a Fatal Exception will be thrown if server requirements are not met.
+O2System Cache is build for working more powerfull with O2System Framework, but also can be used for integrated with others as standalone version with limited features.
 
-[O2System Cache](https://github.com/o2system/cache) is build for working more powerful with [O2System PHP Framework](https://github.com/o2system/o2system), but also can be integrated with other frameworks as standalone PHP Classes Library with limited features.
-
-### Supported Storage Engines Handlers
+### Supported Storage Engines Adapters
 | Engine | Support | Tested  | &nbsp; |
 | ------------- |:-------------:|:-----:| ----- |
 | APC | ```Yes``` | ```Yes``` | http://php.net/apc |
+| APCu | ```Yes``` | ```Yes``` | http://php.net/apcu |
 | File | ```Yes``` | ```Yes``` | http://php.net/file |
+| Memcache | ```Yes``` | ```Yes``` | http://php.net/memcache |
 | Memcached | ```Yes``` | ```Yes``` | http://php.net/memcached |
 | Redis | ```Yes``` | ```Yes``` | http://redis.io |
 | Wincache | ```Yes``` | ```Yes``` | http://php.net/wincache |
