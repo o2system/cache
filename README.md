@@ -1,4 +1,4 @@
-[O2System Cache](https://github.com/o2system/cache) is an Open Source Native PHP Cache Management Handler Library. 
+[O2System Cache](https://github.com/o2system/cache) is an PHP Cache Management Library. 
 Allows different cache storage platform to be used. 
 All but file-based storage require specific server requirements, and a Fatal Exception will be thrown if server requirements are not met.
 
