@@ -1,11 +1,10 @@
-<<<<<<< HEAD
 [O2System Cache](https://github.com/o2system/cache) is an PHP Cache Management Library. 
 Allows different cache storage platform to be used. 
 All but file-based storage require specific server requirements, and a Fatal Exception will be thrown if server requirements are not met.
 
 [O2System Cache](https://github.com/o2system/cache) is build for working more powerful with [O2System PHP Framework](https://github.com/o2system/o2system), but also can be integrated with other frameworks as standalone PHP Classes Library with limited features.
 
-### Supported Storage Engines Handlers
+Supported Storage Engines Handlers
 =======
 # O2System Cache
 O2System Cache is an Open Source Cache Management Driver Library. 
@@ -14,7 +13,6 @@ All but file-based caching require specific server requirements, and a Fatal Exc
 O2System Cache is build for working more powerfull with O2System Framework, but also can be used for integrated with others as standalone version with limited features.
 
 ### Supported Storage Engines Adapters
->>>>>>> origin/master
 | Engine | Support | Tested  | &nbsp; |
 | ------------- |:-------------:|:-----:| ----- |
 | APC | ```Yes``` | ```Yes``` | http://php.net/apc |
@@ -27,7 +25,6 @@ O2System Cache is build for working more powerfull with O2System Framework, but 
 | XCache | ```Yes``` | ```Yes``` | https://xcache.lighttpd.net/ |
 | Zend OPCache | ```Yes``` | ```Yes``` | http://php.net/opcache |
 
-<<<<<<< HEAD
 ### Composer Instalation
 The best way to install O2System Cache is to use [Composer](https://getcomposer.org)
 ```
@@ -59,7 +56,7 @@ Please kindly submit your [issues at Github](https://github.com/o2system/cache/i
 
 ### Supported By
 * [Zend Technologies Ltd.](http://zend.com)
-=======
+
 Installation
 ------------
 The best way to install [O2System Cache](https://packagist.org/packages/o2system/cache) is to use [Composer](http://getcomposer.org)
@@ -105,4 +102,3 @@ Credits
 Supported By
 ------------
 * [Zend Technologies Ltd.](http://zend.com)
->>>>>>> origin/master
