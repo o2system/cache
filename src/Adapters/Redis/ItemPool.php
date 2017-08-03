@@ -94,6 +94,7 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
         }
 
         $metadata = $this->redis->get( $this->prefixKey . $key );
+        $metadata = unserialize( $metadata );
 
         return new Item( $key, $metadata );
     }
@@ -191,7 +192,7 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
         $metadata = $item->getMetadata();
         $metadata[ 'data' ] = $item->get();
 
-        if ( ! $this->redis->hMSet( $this->prefixKey . $item->getKey(), $metadata ) ) {
+        if ( ! $this->redis->set( $this->prefixKey . $item->getKey(), serialize( $metadata ), $metadata[ 'ttl' ] ) ) {
             return false;
         } elseif ( $metadata[ 'ttl' ] > 0 ) {
             $this->redis->expireAt( $this->prefixKey . $item->getKey(), $metadata[ 'etime' ] );

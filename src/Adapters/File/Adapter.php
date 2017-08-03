@@ -124,6 +124,20 @@ abstract class Adapter extends AbstractAdapter
     // ------------------------------------------------------------------------
 
     /**
+     * Adapter::isConnected
+     *
+     * Checks if this adapter has a successful connection.
+     *
+     * @return bool Returns FALSE if not supported.
+     */
+    public function isConnected()
+    {
+        return (bool)is_writable( $this->path );
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
      * Adapter::increment
      *
      * Increment a raw value offset.

@@ -98,4 +98,26 @@ abstract class AbstractAdapter extends AbstractItemPool implements CacheItemPool
     {
         return $this->platform;
     }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * AbstractAdapter::isSupported
+     *
+     * Checks if this adapter is supported on this system.
+     *
+     * @return bool Returns FALSE if not supported.
+     */
+    abstract public function isSupported();
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * AbstractAdapter::isConnected
+     *
+     * Checks if this adapter has a successful connection.
+     *
+     * @return bool Returns FALSE if not supported.
+     */
+    abstract public function isConnected();
 }

@@ -127,4 +127,18 @@ abstract class Adapter extends AbstractAdapter
     {
         return (bool)( extension_loaded( 'wincache' ) && ini_get( 'wincache.ucenabled' ) );
     }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * Adapter::isConnected
+     *
+     * Checks if this adapter has a successful connection.
+     *
+     * @return bool Returns FALSE if not supported.
+     */
+    public function isConnected()
+    {
+        return (bool)( function_exists('wincache_ucache_meminfo') );
+    }
 }

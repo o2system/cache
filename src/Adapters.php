@@ -62,7 +62,9 @@ class Adapters extends AbstractObjectRegistryPattern implements CacheItemPoolInt
         if ( class_exists( $adapterClassName ) ) {
             $adapter = new $adapterClassName( $poolConfig );
 
-            $this->register( $adapter, $poolOffset );
+            if( $adapter->isSupported() ) {
+                $this->register( $adapter, $poolOffset );
+            }
         }
     }
 

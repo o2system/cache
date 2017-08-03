@@ -16,7 +16,7 @@ namespace O2System\Cache\Adapters\Memcached;
 
 use O2System\Cache\Abstracts\AbstractAdapter;
 use O2System\Cache\Datastructures\Config;
-use O2System\Spl\Exceptions\BadMethodCallException;
+use O2System\Spl\Exceptions\Logic\BadFunctionCall\BadMethodCallException;
 
 /**
  * Class Adapter
@@ -77,6 +77,20 @@ abstract class Adapter extends AbstractAdapter
     public function isSupported()
     {
         return (bool)( extension_loaded( 'memcached' ) && class_exists( 'Memcached', false ) );
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * Adapter::isConnected
+     *
+     * Checks if this adapter has a successful connection.
+     *
+     * @return bool Returns FALSE if not supported.
+     */
+    public function isConnected()
+    {
+        return (bool)( $this->memcached instanceof \Memcached );
     }
 
     // ------------------------------------------------------------------------
@@ -173,7 +187,7 @@ abstract class Adapter extends AbstractAdapter
      * @param array  $arguments Method arguments.
      *
      * @return mixed
-     * @throws \O2System\Cache\Exceptions\BadMethodCallException
+     * @throws \O2System\Spl\Exceptions\Logic\BadFunctionCall\BadMethodCallException
      */
     public function __call( $method, array $arguments = [] )
     {

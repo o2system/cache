@@ -55,8 +55,6 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
         if ( empty( $keys ) ) {
             $allItems = $this->memcached->getAllKeys();
 
-            print_out( $allItems );
-
             foreach ( $allItems as $server => $metadata ) {
                 foreach ( $metadata[ 'items' ] AS $itemKey => $itemMetadata ) {
                     $cacheDump = $this->memcached->getExtendedStats( 'cachedump', (int)$itemKey );
@@ -229,6 +227,6 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
         $metadata = $item->getMetadata();
         $metadata[ 'data' ] = $item->get();
 
-        return $this->memcached->add( $this->prefixKey . $item->getKey(), $metadata, $metadata[ 'ttl' ] );
+        return $this->memcached->set( $this->prefixKey . $item->getKey(), $metadata, $metadata[ 'ttl' ] );
     }
 }

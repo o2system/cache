@@ -131,4 +131,16 @@ abstract class Adapter extends AbstractAdapter
     {
         return (bool)( extension_loaded( 'apcu' ) && ini_get( 'apc.enabled' ) );
     }
+
+    /**
+     * Adapter::isConnected
+     *
+     * Checks if this adapter has a successful connection.
+     *
+     * @return bool Returns FALSE if not supported.
+     */
+    public function isConnected()
+    {
+        return (bool) function_exists('apcu_cache_info');
+    }
 }

@@ -144,7 +144,7 @@ class ItemPool extends Adapter
         // Resets the contents of the opcode cache
         opcache_reset();
 
-        return apcu_clear_cache( 'user' );
+        return apcu_clear_cache();
     }
 
     // ------------------------------------------------------------------------

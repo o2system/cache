@@ -16,6 +16,7 @@ namespace O2System\Cache\Adapters\Redis;
 
 use O2System\Cache\Abstracts\AbstractAdapter;
 use O2System\Spl\Exceptions\Logic\DomainException;
+use O2System\Spl\Exceptions\Logic\InvalidArgumentException;
 use O2System\Spl\Exceptions\RuntimeException;
 
 /**
@@ -47,7 +48,7 @@ abstract class Adapter extends AbstractAdapter
      * @param array $config Cache adapter connection configuration.
      *
      * @return void
-     * @throws \O2System\Cache\Exceptions\AdapterException
+     * @throws \O2System\Spl\Exceptions\RuntimeException
      */
     public function connect( array $config )
     {
@@ -96,7 +97,7 @@ abstract class Adapter extends AbstractAdapter
      * @param string $key  Cache item key.
      * @param int    $step Increment step to add.
      *
-     * @throws InvalidArgumentException
+     * @throws \O2System\Spl\Exceptions\Logic\InvalidArgumentException
      *   If any of the keys in $keys are not a legal value a \Psr\Cache\InvalidArgumentException
      *   MUST be thrown.
      *
@@ -121,7 +122,7 @@ abstract class Adapter extends AbstractAdapter
      * @param string $key  Cache item key.
      * @param int    $step Decrement step to add.
      *
-     * @throws InvalidArgumentException
+     * @throws \O2System\Spl\Exceptions\Logic\InvalidArgumentException
      *   If any of the keys in $keys are not a legal value a \Psr\Cache\InvalidArgumentException
      *   MUST be thrown.
      *
@@ -176,5 +177,19 @@ abstract class Adapter extends AbstractAdapter
     public function isSupported()
     {
         return (bool)( extension_loaded( 'redis' ) && class_exists( 'Redis', false ) );
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * Adapter::isConnected
+     *
+     * Checks if this adapter has a successful connection.
+     *
+     * @return bool Returns FALSE if not supported.
+     */
+    public function isConnected()
+    {
+        return (bool)( $this->redis instanceof \Redis );
     }
 }
