@@ -28,7 +28,7 @@ O2System Cache is build for working more powerfull with O2System Framework, but 
 ### Composer Instalation
 The best way to install O2System Cache is to use [Composer](https://getcomposer.org)
 ```
-composer require o2system/cache
+composer require o2system/cache --prefer-dist dev-master
 ```
 > Packagist: [https://packagist.org/packages/o2system/cache](https://packagist.org/packages/o2system/Cache)
 
