@@ -8,13 +8,13 @@ O2System Cache is an Open Source Cache Management Adapters Library. Wrappers aro
 | APCu | ```Yes``` | ```Yes``` | http://php.net/apcu |
 | File | ```Yes``` | ```Yes``` | http://php.net/file |
 | Memcache | ```Yes``` | ```Yes``` | http://php.net/memcache |
-| Memcached | ```Yes``` | ```No``` | http://php.net/memcached |
+| Memcached | ```Yes``` | ```Yes``` | http://php.net/memcached |
 | Redis | ```Yes``` | ```Yes``` | http://redis.io |
 | Wincache | ```Yes``` | ```Yes``` | http://php.net/wincache |
 | XCache | ```Yes``` | ```No``` | https://xcache.lighttpd.net/ |
 | Zend OPCache | ```Yes``` | ```Yes``` | http://php.net/opcache |
 
-### Composer Instalation
+### Composer Installation
 The best way to install O2System Cache is to use [Composer](https://getcomposer.org)
 ```
 composer require o2system/cache --prefer-dist dev-master
