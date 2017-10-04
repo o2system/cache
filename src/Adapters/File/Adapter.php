@@ -97,7 +97,7 @@ abstract class Adapter extends AbstractAdapter
         $this->path = rtrim( $this->path, DIRECTORY_SEPARATOR ) . DIRECTORY_SEPARATOR;
 
         if ( $this->isSupported() === false ) {
-            throw new OverflowException( 'E_MESSAGE_CACHE_FILE_UNABLE_TO_WRITE', 0, [ $this->path ] );
+            throw new OverflowException( 'CACHE_FILE_E_UNABLE_TO_WRITE', 0, [ $this->path ] );
         }
     }
 
@@ -152,7 +152,7 @@ abstract class Adapter extends AbstractAdapter
     public function increment( $key, $step = 1 )
     {
         if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'E_HEADER_INVALIDARGUMENTEXCEPTION' );
+            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION' );
         }
 
         if ( $this->hasItem( $key ) ) {
@@ -189,7 +189,7 @@ abstract class Adapter extends AbstractAdapter
     public function decrement( $key, $step = 1 )
     {
         if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'E_HEADER_INVALIDARGUMENTEXCEPTION' );
+            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION' );
         }
 
         if ( $this->hasItem( $key ) ) {

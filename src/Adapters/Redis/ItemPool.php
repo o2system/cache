@@ -47,7 +47,7 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
     public function getItems( array $keys = [] )
     {
         if ( ! is_array( $keys ) ) {
-            throw new InvalidArgumentException( 'E_HEADER_INVALIDARGUMENTEXCEPTION' );
+            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_ARRAY_CACHE_EXCEPTION' );
         }
 
         $items = [];
@@ -90,7 +90,7 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
     public function getItem( $key )
     {
         if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'E_HEADER_INVALIDARGUMENTEXCEPTION' );
+            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION' );
         }
 
         $metadata = $this->redis->get( $this->prefixKey . $key );
@@ -123,7 +123,7 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
     public function hasItem( $key )
     {
         if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'E_HEADER_INVALIDARGUMENTEXCEPTION' );
+            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION' );
         }
 
         return (bool)$this->redis->exists( $this->prefixKey . $key );
@@ -168,7 +168,7 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
     public function deleteItem( $key )
     {
         if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'E_HEADER_INVALIDARGUMENTEXCEPTION' );
+            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION' );
         }
 
         return (bool)( $this->redis->delete( $this->prefixKey . $key ) === 1 );

@@ -219,7 +219,7 @@ abstract class Adapter extends AbstractAdapter
             return call_user_func_array( [ &$this->memcache, $method ], $arguments );
         }
 
-        throw new BadMethodCallException( 'E_MEMCACHE_ADAPTER_BAD_METHOD', 0, [ __CLASS__ . '::' . $method ] );
+        throw new BadMethodCallException( 'E_BAD_METHOD_CALL_CACHE_EXCEPTION', 0, [ __CLASS__ . '::' . $method ] );
     }
 
     // ------------------------------------------------------------------------

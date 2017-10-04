@@ -47,7 +47,7 @@ class ItemPool extends Adapter
     public function getItems( array $keys = [] )
     {
         if ( ! is_array( $keys ) ) {
-            throw new InvalidArgumentException( 'E_HEADER_INVALIDARGUMENTEXCEPTION' );
+            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_ARRAY_CACHE_EXCEPTION' );
         }
 
         $items = [];
@@ -90,7 +90,7 @@ class ItemPool extends Adapter
     public function getItem( $key )
     {
         if ( ! is_string( $key ) ) {
-            throw new OutOfRangeException( "Error Processing Request", 1 );
+            throw new OutOfRangeException( "E_OUT_OF_RANGE_CACHE_EXCEPTION", 1 );
         }
 
         $success = false;
@@ -124,7 +124,7 @@ class ItemPool extends Adapter
     public function hasItem( $key )
     {
         if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'E_HEADER_INVALIDARGUMENTEXCEPTION' );
+            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION' );
         }
 
         return (bool)apc_exists( $this->prefixKey . $key );
@@ -165,7 +165,7 @@ class ItemPool extends Adapter
     public function deleteItem( $key )
     {
         if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'E_HEADER_INVALIDARGUMENTEXCEPTION' );
+            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION' );
         }
 
         return apc_delete( $this->prefixKey . $key );

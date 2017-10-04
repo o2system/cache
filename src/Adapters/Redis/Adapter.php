@@ -72,15 +72,15 @@ abstract class Adapter extends AbstractAdapter
                 $this->config[ 'timeout' ]
             )
             ) {
-                throw new RuntimeException( 'E_REDIS_ADAPTER_CONNECTION_FAILED' );
+                throw new RuntimeException( 'CACHE_REDIS_E_CONNECTION_FAILED' );
             }
 
             if ( isset( $this->config[ 'password' ] ) AND ! $this->redis->auth( $this->config[ 'password' ] ) ) {
-                throw new DomainException( 'E_REDIS_ADAPTER_AUTHENTICATION_FAILED' );
+                throw new DomainException( 'CACHE_REDIS_E_AUTHENTICATION_FAILED' );
             }
 
             if ( isset( $this->config[ 'dbIndex' ] ) AND ! $this->redis->select( $this->config[ 'dbIndex' ] ) ) {
-                throw new RuntimeException( 'E_REDIS_ADAPTER_DB_CONNECTION_FAILED' );
+                throw new RuntimeException( 'CACHE_REDIS_E_DB_CONNECTION_FAILED' );
             }
         } catch ( \RedisException $e ) {
             throw new RuntimeException( 'E_REDIS_ADAPTER_CONNECTION_REFUSED', $e->getCode(), [ $e->getMessage() ] );
@@ -106,7 +106,7 @@ abstract class Adapter extends AbstractAdapter
     public function increment( $key, $step = 1 )
     {
         if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'E_HEADER_INVALIDARGUMENTEXCEPTION' );
+            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION' );
         }
 
         return $this->redis->hIncrBy( $this->prefixKey . $key, 'data', $step );
@@ -131,7 +131,7 @@ abstract class Adapter extends AbstractAdapter
     public function decrement( $key, $step = 1 )
     {
         if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'E_HEADER_INVALIDARGUMENTEXCEPTION' );
+            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION' );
         }
 
         return $this->redis->hIncrBy( $this->prefixKey . $key, 'data', -$step );

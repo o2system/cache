@@ -11,15 +11,13 @@
 // ------------------------------------------------------------------------
 
 /**
- * O2System Psr Autoload
+ * O2System Cache Autoload
  *
  * @param $className
  */
 spl_autoload_register(
     function ( $className ) {
-        if ( $className === 'O2System\Cache' ) {
-            require __DIR__ . DIRECTORY_SEPARATOR . 'Cache.php';
-        } elseif ( strpos( $className, 'O2System\Cache\\' ) === false ) {
+        if ( strpos( $className, 'O2System\Cache\\' ) === false ) {
             return;
         }
 

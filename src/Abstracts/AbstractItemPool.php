@@ -49,7 +49,7 @@ abstract class AbstractItemPool implements CacheItemPoolInterface
     public function deleteItems( array $keys )
     {
         if ( ! is_array( $keys ) ) {
-            throw new InvalidArgumentException( 'E_HEADER_INVALIDARGUMENTEXCEPTION' );
+            throw new InvalidArgumentException( 'CACHE_E_INVALID_ARGUMENT_ARRAY' );
         }
 
         foreach ( $keys as $key ) {
