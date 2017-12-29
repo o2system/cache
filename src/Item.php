@@ -24,6 +24,8 @@ use O2System\Psr\Cache\CacheItemInterface;
 class Item implements CacheItemInterface
 {
     /**
+     * Item::$key
+     * 
      * Item Key
      *
      * @var string
@@ -31,6 +33,8 @@ class Item implements CacheItemInterface
     protected $key;
 
     /**
+     * Item::$value
+     * 
      * Item Value
      *
      * @var mixed|null
@@ -38,6 +42,8 @@ class Item implements CacheItemInterface
     protected $value = null;
 
     /**
+     * Item::$isHit
+     * 
      * Item is hit flag
      *
      * @var bool
@@ -45,6 +51,8 @@ class Item implements CacheItemInterface
     protected $isHit = false;
 
     /**
+     * Item::$createdAt
+     * 
      * Item Creation Time
      *
      * @var \DateTimeInterface
@@ -52,6 +60,8 @@ class Item implements CacheItemInterface
     protected $createdAt;
 
     /**
+     * Item::$expiresAt
+     * 
      * Item Expiration Time
      *
      * @var \DateTimeInterface
@@ -59,6 +69,8 @@ class Item implements CacheItemInterface
     protected $expiresAt;
 
     /**
+     * Item::$expiresAfter
+     * 
      * Item Expiration Time Interval
      *
      * @var int|\DateInterval

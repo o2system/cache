@@ -27,6 +27,8 @@ use O2System\Spl\Exceptions\RuntimeException;
 abstract class Adapter extends AbstractAdapter
 {
     /**
+     * Adapter::$platform
+     * 
      * Adapter Platform Name
      *
      * @var string
@@ -34,6 +36,8 @@ abstract class Adapter extends AbstractAdapter
     protected $platform = 'Redis';
 
     /**
+     * Adapter::$redis
+     * 
      * Redis Instance
      *
      * @var \Redis

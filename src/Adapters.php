@@ -70,15 +70,28 @@ class Adapters extends AbstractObjectRegistryPattern implements CacheItemPoolInt
 
     // ------------------------------------------------------------------------
 
+    /**
+     * Adapters::getItemPool
+     *
+     * Gets item pool.
+     *
+     * @param string $poolOffset
+     *
+     * @return mixed
+     */
     public function &getItemPool( $poolOffset )
     {
         return $this->getObject( $poolOffset );
     }
 
+    // ------------------------------------------------------------------------
+
     public function hasItemPool( $poolOffset )
     {
         return $this->__isset( $poolOffset );
     }
+
+    // ------------------------------------------------------------------------
 
     /**
      * Adapters::isValid

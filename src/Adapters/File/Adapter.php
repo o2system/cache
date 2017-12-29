@@ -28,6 +28,8 @@ use O2System\Spl\Info\SplDirectoryInfo;
 abstract class Adapter extends AbstractAdapter
 {
     /**
+     * Adapter::$platform
+     *
      * Adapter Platform Name
      *
      * @var string
@@ -35,6 +37,8 @@ abstract class Adapter extends AbstractAdapter
     protected $platform = 'Filesystem Cache';
 
     /**
+     * Adapter::$path
+     *
      * Adapter Temporary Path
      *
      * @var string

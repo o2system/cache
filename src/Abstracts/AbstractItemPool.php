@@ -26,6 +26,8 @@ use O2System\Spl\Exceptions\Logic\InvalidArgumentException;
 abstract class AbstractItemPool implements CacheItemPoolInterface
 {
     /**
+     * AbstractItemPool::$storage
+     *
      * Deferred Items Storage
      *
      * @var array

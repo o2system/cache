@@ -24,6 +24,8 @@ use O2System\Cache\Abstracts\AbstractAdapter;
 abstract class Adapter extends AbstractAdapter
 {
     /**
+     * Adapter::$platform
+     * 
      * Adapter Platform Name
      *
      * @var string

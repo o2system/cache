@@ -26,6 +26,8 @@ use O2System\Spl\Exceptions\Logic\BadFunctionCall\BadMethodCallException;
 abstract class Adapter extends AbstractAdapter
 {
     /**
+     * Adapter::$platform
+     * 
      * Adapter Platform Name
      *
      * @var string
@@ -35,6 +37,8 @@ abstract class Adapter extends AbstractAdapter
     // ------------------------------------------------------------------------
 
     /**
+     * Adapter::$memchached
+     * 
      * Memcached Instance
      *
      * @var \Memcached

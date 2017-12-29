@@ -26,6 +26,8 @@ use O2System\Spl\Exceptions\Logic\BadFunctionCall\BadDependencyCallException;
 abstract class AbstractAdapter extends AbstractItemPool implements CacheItemPoolAdapterInterface
 {
     /**
+     * AbstractAdapter::$platform
+     *
      * Adapter Platform Name
      *
      * @var string
@@ -40,6 +42,8 @@ abstract class AbstractAdapter extends AbstractItemPool implements CacheItemPool
     protected $config = [];
 
     /**
+     * AbstractAdapter::$config
+     *
      * Adapter Prefix Key
      *
      * @var string
