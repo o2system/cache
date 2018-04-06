@@ -1,5 +1,7 @@
 # O2System Cache
-O2System Cache is an Open Source Cache Management Adapters Library. This allows the O2 System Framework to integrate with some of the most popular cache storage engines. All but file-based caching require specific server requirements, and a Fatal Exception will be thrown if server requirements are not met. O2System Cache is build for working more powerful within O2System Framework, but also can be used for integrated with others as standalone version with limited features.
+O2System Cache is an Open Source Cache Management Adapters Library. This allows the O2System Framework to integrate with some of the most popular cache storage engines. All but file-based caching require specific server requirements, and a Fatal Exception will be thrown if server requirements are not met. O2System Cache is build for working more powerful within O2System Framework, but also can be used for integrated with others as standalone version with limited features.
+
+O2System Cache is written based on PSR-6: Caching Interface and PSR-16: Common Interface for Caching Libraries. 
 
 ### Supported Storage Engines Adapters
 | Engine | 5.6+ | 7.0+  | &nbsp; |
