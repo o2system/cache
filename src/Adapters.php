@@ -14,18 +14,17 @@ namespace O2System\Cache;
 
 // ------------------------------------------------------------------------
 
+use O2System\Cache\Abstracts\AbstractAdapter;
 use O2System\Cache\Abstracts\AbstractItemPool;
-use O2System\Psr\Cache\CacheItemInterface;
-use O2System\Psr\Cache\CacheItemPoolInterface;
-use O2System\Psr\Cache\InvalidArgumentException;
-use O2System\Psr\Patterns\AbstractObjectRegistryPattern;
+use O2System\Psr\Patterns\Structural\Provider\AbstractProvider;
+use O2System\Psr\Patterns\Structural\Provider\ValidationInterface;
 
 /**
  * Class Adapters
  *
  * @package O2System\Cache
  */
-class Adapters extends AbstractObjectRegistryPattern
+class Adapters extends AbstractProvider implements ValidationInterface
 {
     /**
      * Adapters::__construct
@@ -62,8 +61,10 @@ class Adapters extends AbstractObjectRegistryPattern
         if ( class_exists( $adapterClassName ) ) {
             $adapter = new $adapterClassName( $poolConfig );
 
-            if( $adapter->isSupported() ) {
-                $this->register( $adapter, $poolOffset );
+            if($adapter instanceof AbstractAdapter) {
+                if( $adapter->isSupported() ) {
+                    $this->register( $adapter, $poolOffset );
+                }
             }
         }
     }
@@ -94,7 +95,7 @@ class Adapters extends AbstractObjectRegistryPattern
     // ------------------------------------------------------------------------
 
     /**
-     * Adapters::isValid
+     * Adapters::validate
      *
      * Determine if value is meet requirement.
      *
@@ -102,7 +103,7 @@ class Adapters extends AbstractObjectRegistryPattern
      *
      * @return bool
      */
-    public function isValid( $value )
+    public function validate( $value )
     {
         if ( $value instanceof AbstractItemPool ) {
             return true;
