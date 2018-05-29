@@ -8,6 +8,7 @@
  * @author         Steeve Andrian Salim
  * @copyright      Copyright (c) Steeve Andrian Salim
  */
+
 // ------------------------------------------------------------------------
 
 namespace O2System\Cache\Adapters\File;
@@ -54,15 +55,15 @@ abstract class Adapter extends AbstractAdapter
      *
      * @throws \O2System\Spl\Exceptions\Runtime\OverflowException
      */
-    public function __construct( Config $config = null )
+    public function __construct(Config $config = null)
     {
-        if ( isset( $config ) ) {
+        if (isset($config)) {
             $config = $config->getArrayCopy();
-        } elseif ( is_null( $config ) ) {
+        } elseif (is_null($config)) {
             $config = [];
         }
 
-        $this->connect( $config );
+        $this->connect($config);
     }
 
     /**
@@ -73,35 +74,35 @@ abstract class Adapter extends AbstractAdapter
      * @return void
      * @throws OverflowException
      */
-    public function connect( array $config )
+    public function connect(array $config)
     {
-        if ( isset( $config[ 'path' ] ) ) {
-            $config[ 'path' ] = str_replace( [ '\\', '/' ], DIRECTORY_SEPARATOR, $config[ 'path' ] );
+        if (isset($config[ 'path' ])) {
+            $config[ 'path' ] = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $config[ 'path' ]);
 
-            if ( is_dir( $config[ 'path' ] ) ) {
+            if (is_dir($config[ 'path' ])) {
                 $this->path = $config[ 'path' ];
-            } elseif ( defined( 'PATH_CACHE' ) ) {
-                if ( is_dir( $config[ 'path' ] ) ) {
+            } elseif (defined('PATH_CACHE')) {
+                if (is_dir($config[ 'path' ])) {
                     $this->path = $config[ 'path' ];
                 } else {
-                    $this->path = PATH_CACHE . str_replace( PATH_CACHE, '', $config[ 'path' ] );
+                    $this->path = PATH_CACHE . str_replace(PATH_CACHE, '', $config[ 'path' ]);
                 }
             } else {
                 $this->path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $config[ 'path' ];
             }
-        } elseif ( defined( 'PATH_CACHE' ) ) {
+        } elseif (defined('PATH_CACHE')) {
             $this->path = PATH_CACHE;
         } else {
             $this->path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . implode(
                     DIRECTORY_SEPARATOR,
-                    [ 'o2system', 'cache' ]
+                    ['o2system', 'cache']
                 );
         }
 
-        $this->path = rtrim( $this->path, DIRECTORY_SEPARATOR ) . DIRECTORY_SEPARATOR;
+        $this->path = rtrim($this->path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
-        if ( $this->isSupported() === false ) {
-            throw new OverflowException( 'CACHE_FILE_E_UNABLE_TO_WRITE', 0, [ $this->path ] );
+        if ($this->isSupported() === false) {
+            throw new OverflowException('CACHE_FILE_E_UNABLE_TO_WRITE', 0, [$this->path]);
         }
     }
 
@@ -116,13 +117,13 @@ abstract class Adapter extends AbstractAdapter
      */
     public function isSupported()
     {
-        if ( ! is_writable( $this->path ) ) {
-            if ( ! file_exists( $this->path ) ) {
-                mkdir( $this->path, 0777, true );
+        if ( ! is_writable($this->path)) {
+            if ( ! file_exists($this->path)) {
+                mkdir($this->path, 0777, true);
             }
         }
 
-        return (bool)is_writable( $this->path );
+        return (bool)is_writable($this->path);
     }
 
     // ------------------------------------------------------------------------
@@ -136,7 +137,7 @@ abstract class Adapter extends AbstractAdapter
      */
     public function isConnected()
     {
-        return (bool)is_writable( $this->path );
+        return (bool)is_writable($this->path);
     }
 
     // ------------------------------------------------------------------------
@@ -153,21 +154,21 @@ abstract class Adapter extends AbstractAdapter
      * @throws \O2System\Spl\Exceptions\Logic\InvalidArgumentException
      * @throws \O2System\Psr\Cache\InvalidArgumentException
      */
-    public function increment( $key, $step = 1 )
+    public function increment($key, $step = 1)
     {
-        if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION' );
+        if ( ! is_string($key)) {
+            throw new InvalidArgumentException('E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION');
         }
 
-        if ( $this->hasItem( $key ) ) {
-            $item = $this->getItem( $key );
+        if ($this->hasItem($key)) {
+            $item = $this->getItem($key);
             $value = $item->get();
 
-            if ( is_int( $value ) ) {
+            if (is_int($value)) {
                 $value += $step;
-                $item->set( $value );
+                $item->set($value);
 
-                $this->save( $item );
+                $this->save($item);
 
                 return $value;
             }
@@ -190,21 +191,21 @@ abstract class Adapter extends AbstractAdapter
      * @throws \O2System\Spl\Exceptions\Logic\InvalidArgumentException
      * @throws \O2System\Psr\Cache\InvalidArgumentException
      */
-    public function decrement( $key, $step = 1 )
+    public function decrement($key, $step = 1)
     {
-        if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION' );
+        if ( ! is_string($key)) {
+            throw new InvalidArgumentException('E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION');
         }
 
-        if ( $this->hasItem( $key ) ) {
-            $item = $this->getItem( $key );
+        if ($this->hasItem($key)) {
+            $item = $this->getItem($key);
             $value = $item->get();
 
-            if ( is_int( $value ) ) {
+            if (is_int($value)) {
                 $value -= $step;
-                $item->set( $value );
+                $item->set($value);
 
-                $this->save( $item );
+                $this->save($item);
 
                 return $value;
             }
@@ -224,7 +225,7 @@ abstract class Adapter extends AbstractAdapter
      */
     public function getInfo()
     {
-        return new SplDirectoryInfo( $this->path );
+        return new SplDirectoryInfo($this->path);
     }
 
     // ------------------------------------------------------------------------
@@ -239,20 +240,20 @@ abstract class Adapter extends AbstractAdapter
     public function getStats()
     {
         $directory = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator( $this->path ),
+            new \RecursiveDirectoryIterator($this->path),
             \RecursiveIteratorIterator::SELF_FIRST
         );
 
-        $cacheIterator = new \RegexIterator( $directory, '/^.+\.cache/i', \RecursiveRegexIterator::GET_MATCH );
+        $cacheIterator = new \RegexIterator($directory, '/^.+\.cache/i', \RecursiveRegexIterator::GET_MATCH);
 
         $stats[ 'path' ] = $this->path;
         $stats[ 'files' ] = 0;
         $stats[ 'size' ] = 0;
 
-        foreach ( $cacheIterator as $cacheFiles ) {
-            foreach ( $cacheFiles as $cacheFile ) {
+        foreach ($cacheIterator as $cacheFiles) {
+            foreach ($cacheFiles as $cacheFile) {
                 $stats[ 'files' ]++;
-                $stats[ 'size' ] += filesize( $cacheFile );
+                $stats[ 'size' ] += filesize($cacheFile);
             }
         }
 

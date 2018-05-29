@@ -8,6 +8,7 @@
  * @author         Steeve Andrian Salim
  * @copyright      Copyright (c) Steeve Andrian Salim
  */
+
 // ------------------------------------------------------------------------
 
 namespace O2System\Cache\Adapters\Redis;
@@ -44,23 +45,23 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      *   key is not found. However, if no keys are specified then an empty
      *   traversable MUST be returned instead.
      */
-    public function getItems( array $keys = [] )
+    public function getItems(array $keys = [])
     {
-        if ( ! is_array( $keys ) ) {
-            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_ARRAY_CACHE_EXCEPTION' );
+        if ( ! is_array($keys)) {
+            throw new InvalidArgumentException('E_INVALID_ARGUMENT_ARRAY_CACHE_EXCEPTION');
         }
 
         $items = [];
 
-        if ( empty( $keys ) ) {
-            $allItems = $this->redis->getKeys( '*' );
+        if (empty($keys)) {
+            $allItems = $this->redis->getKeys('*');
 
-            foreach ( $allItems as $itemKey ) {
-                $items[] = $this->getItem( str_replace( $this->prefixKey, '', $itemKey ) );
+            foreach ($allItems as $itemKey) {
+                $items[] = $this->getItem(str_replace($this->prefixKey, '', $itemKey));
             }
-        } elseif ( count( $keys ) ) {
-            foreach ( $keys as $key ) {
-                $items[] = $this->getItem( $key );
+        } elseif (count($keys)) {
+            foreach ($keys as $key) {
+                $items[] = $this->getItem($key);
             }
         }
 
@@ -87,16 +88,16 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      * @return CacheItemInterface
      *   The corresponding Cache Item.
      */
-    public function getItem( $key )
+    public function getItem($key)
     {
-        if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION' );
+        if ( ! is_string($key)) {
+            throw new InvalidArgumentException('E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION');
         }
 
-        $metadata = $this->redis->get( $this->prefixKey . $key );
-        $metadata = unserialize( $metadata );
+        $metadata = $this->redis->get($this->prefixKey . $key);
+        $metadata = unserialize($metadata);
 
-        return new Item( $key, $metadata );
+        return new Item($key, $metadata);
     }
 
     // ------------------------------------------------------------------------
@@ -120,13 +121,13 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      * @return bool
      *   True if item exists in the cache, false otherwise.
      */
-    public function hasItem( $key )
+    public function hasItem($key)
     {
-        if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION' );
+        if ( ! is_string($key)) {
+            throw new InvalidArgumentException('E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION');
         }
 
-        return (bool)$this->redis->exists( $this->prefixKey . $key );
+        return (bool)$this->redis->exists($this->prefixKey . $key);
     }
 
     // ------------------------------------------------------------------------
@@ -141,7 +142,7 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      */
     public function clear()
     {
-        if ( isset( $this->config[ 'dbIndex' ] ) ) {
+        if (isset($this->config[ 'dbIndex' ])) {
             return $this->redis->flushDB();
         } else {
             return $this->redis->flushAll();
@@ -165,13 +166,13 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      * @return bool
      *   True if the item was successfully removed. False if there was an error.
      */
-    public function deleteItem( $key )
+    public function deleteItem($key)
     {
-        if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION' );
+        if ( ! is_string($key)) {
+            throw new InvalidArgumentException('E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION');
         }
 
-        return (bool)( $this->redis->delete( $this->prefixKey . $key ) === 1 );
+        return (bool)($this->redis->delete($this->prefixKey . $key) === 1);
     }
 
     // ------------------------------------------------------------------------
@@ -187,15 +188,15 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      * @return bool
      *   True if the item was successfully persisted. False if there was an error.
      */
-    public function save( CacheItemInterface $item )
+    public function save(CacheItemInterface $item)
     {
         $metadata = $item->getMetadata();
         $metadata[ 'data' ] = $item->get();
 
-        if ( ! $this->redis->set( $this->prefixKey . $item->getKey(), serialize( $metadata ), $metadata[ 'ttl' ] ) ) {
+        if ( ! $this->redis->set($this->prefixKey . $item->getKey(), serialize($metadata), $metadata[ 'ttl' ])) {
             return false;
-        } elseif ( $metadata[ 'ttl' ] > 0 ) {
-            $this->redis->expireAt( $this->prefixKey . $item->getKey(), $metadata[ 'etime' ] );
+        } elseif ($metadata[ 'ttl' ] > 0) {
+            $this->redis->expireAt($this->prefixKey . $item->getKey(), $metadata[ 'etime' ]);
         }
 
         return true;

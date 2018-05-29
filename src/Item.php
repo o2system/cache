@@ -8,6 +8,7 @@
  * @author         Steeve Andrian Salim
  * @copyright      Copyright (c) Steeve Andrian Salim
  */
+
 // ------------------------------------------------------------------------
 
 namespace O2System\Cache;
@@ -25,7 +26,7 @@ class Item implements CacheItemInterface
 {
     /**
      * Item::$key
-     * 
+     *
      * Item Key
      *
      * @var string
@@ -34,7 +35,7 @@ class Item implements CacheItemInterface
 
     /**
      * Item::$value
-     * 
+     *
      * Item Value
      *
      * @var mixed|null
@@ -43,7 +44,7 @@ class Item implements CacheItemInterface
 
     /**
      * Item::$isHit
-     * 
+     *
      * Item is hit flag
      *
      * @var bool
@@ -52,7 +53,7 @@ class Item implements CacheItemInterface
 
     /**
      * Item::$createdAt
-     * 
+     *
      * Item Creation Time
      *
      * @var \DateTimeInterface
@@ -61,7 +62,7 @@ class Item implements CacheItemInterface
 
     /**
      * Item::$expiresAt
-     * 
+     *
      * Item Expiration Time
      *
      * @var \DateTimeInterface
@@ -70,7 +71,7 @@ class Item implements CacheItemInterface
 
     /**
      * Item::$expiresAfter
-     * 
+     *
      * Item Expiration Time Interval
      *
      * @var int|\DateInterval
@@ -88,27 +89,27 @@ class Item implements CacheItemInterface
      *
      * @return Item
      */
-    public function __construct( $key, $value = null, $expiresAfter = 300 )
+    public function __construct($key, $value = null, $expiresAfter = 300)
     {
         // Set item key
         $this->key = $key;
 
         // Set from item metadata
-        if ( isset( $value[ 'ctime' ] ) AND isset( $value[ 'etime' ] ) AND isset( $value[ 'ttl' ] ) AND isset( $value[ 'data' ] ) ) {
-            $this->set( $value[ 'data' ] );
-            $this->createdAt = new \DateTime( date( 'r', $value[ 'ctime' ] ) );
-            $this->expiresAt = new \DateTime( date( 'r', $value[ 'etime' ] ) );
-            $this->expiresAfter( $value[ 'ttl' ] );
+        if (isset($value[ 'ctime' ]) AND isset($value[ 'etime' ]) AND isset($value[ 'ttl' ]) AND isset($value[ 'data' ])) {
+            $this->set($value[ 'data' ]);
+            $this->createdAt = new \DateTime(date('r', $value[ 'ctime' ]));
+            $this->expiresAt = new \DateTime(date('r', $value[ 'etime' ]));
+            $this->expiresAfter($value[ 'ttl' ]);
         } else {
             // Set item value
-            $this->set( $value );
+            $this->set($value);
 
             // Set item creation time
-            $this->createdAt = new \DateTime( date( 'r', time() ) );
+            $this->createdAt = new \DateTime(date('r', time()));
 
             // Set item expiration
-            if ( $expiresAfter !== false ) {
-                $this->expiresAfter( $expiresAfter );
+            if ($expiresAfter !== false) {
+                $this->expiresAfter($expiresAfter);
             }
         }
     }
@@ -130,11 +131,11 @@ class Item implements CacheItemInterface
      * @return static
      *   The invoked object.
      */
-    public function set( $value )
+    public function set($value)
     {
         $this->value = $value;
 
-        if ( ! is_null( $value ) ) {
+        if ( ! is_null($value)) {
             $this->isHit = true;
         }
 
@@ -158,19 +159,19 @@ class Item implements CacheItemInterface
      * @return static
      *   The called object.
      */
-    public function expiresAfter( $time = null )
+    public function expiresAfter($time = null)
     {
-        $time = is_null( $time ) ? 300 : $time;
+        $time = is_null($time) ? 300 : $time;
 
-        if ( is_int( $time ) ) {
-            $this->expiresAfter = new \DateInterval( 'PT' . $time . 'S' );
+        if (is_int($time)) {
+            $this->expiresAfter = new \DateInterval('PT' . $time . 'S');
         }
 
-        if ( ! $this->expiresAt instanceof \DateTime ) {
+        if ( ! $this->expiresAt instanceof \DateTime) {
             $this->expiresAt();
         }
 
-        $this->expiresAt->add( $this->expiresAfter );
+        $this->expiresAt->add($this->expiresAfter);
 
         return $this;
     }
@@ -191,9 +192,9 @@ class Item implements CacheItemInterface
      * @return static
      *   The called object.
      */
-    public function expiresAt( \DateTimeInterface $expiration = null )
+    public function expiresAt(\DateTimeInterface $expiration = null)
     {
-        $this->expiresAt = isset( $expiration ) ? $expiration : new \DateTime();
+        $this->expiresAt = isset($expiration) ? $expiration : new \DateTime();
 
         return $this;
     }
@@ -234,7 +235,7 @@ class Item implements CacheItemInterface
      */
     public function get()
     {
-        if ( $this->isHit() ) {
+        if ($this->isHit()) {
             return $this->value;
         }
 
@@ -275,10 +276,10 @@ class Item implements CacheItemInterface
      */
     public function getMetadata()
     {
-        $createdTime = $this->createdAt->format( 'U' );
+        $createdTime = $this->createdAt->format('U');
 
-        if ( $this->expiresAt instanceof \DateTime ) {
-            $expiresTime = $this->expiresAt->format( 'U' );
+        if ($this->expiresAt instanceof \DateTime) {
+            $expiresTime = $this->expiresAt->format('U');
             $ttl = $expiresTime - $createdTime;
         } else {
             $expiresTime = 0;

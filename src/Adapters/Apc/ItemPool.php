@@ -8,6 +8,7 @@
  * @author         Steeve Andrian Salim
  * @copyright      Copyright (c) Steeve Andrian Salim
  */
+
 // ------------------------------------------------------------------------
 
 namespace O2System\Cache\Adapters\Apc;
@@ -44,23 +45,23 @@ class ItemPool extends Adapter
      *   key is not found. However, if no keys are specified then an empty
      *   traversable MUST be returned instead.
      */
-    public function getItems( array $keys = [] )
+    public function getItems(array $keys = [])
     {
-        if ( ! is_array( $keys ) ) {
-            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_ARRAY_CACHE_EXCEPTION' );
+        if ( ! is_array($keys)) {
+            throw new InvalidArgumentException('E_INVALID_ARGUMENT_ARRAY_CACHE_EXCEPTION');
         }
 
         $items = [];
 
-        if ( empty( $keys ) AND class_exists( 'APCIterator', false ) ) {
-            $apcIterator = new \APCIterator( 'user' );
+        if (empty($keys) AND class_exists('APCIterator', false)) {
+            $apcIterator = new \APCIterator('user');
 
-            foreach ( $apcIterator as $item ) {
-                $items[] = new Item( str_replace( $this->prefixKey, '', $item[ 'key' ] ), $item[ 'value' ] );
+            foreach ($apcIterator as $item) {
+                $items[] = new Item(str_replace($this->prefixKey, '', $item[ 'key' ]), $item[ 'value' ]);
             }
-        } elseif ( count( $keys ) ) {
-            foreach ( $keys as $key ) {
-                $items[] = $this->getItem( $key );
+        } elseif (count($keys)) {
+            foreach ($keys as $key) {
+                $items[] = $this->getItem($key);
             }
         }
 
@@ -87,17 +88,17 @@ class ItemPool extends Adapter
      * @return CacheItemInterface
      *   The corresponding Cache Item.
      */
-    public function getItem( $key )
+    public function getItem($key)
     {
-        if ( ! is_string( $key ) ) {
-            throw new OutOfRangeException( "E_OUT_OF_RANGE_CACHE_EXCEPTION", 1 );
+        if ( ! is_string($key)) {
+            throw new OutOfRangeException("E_OUT_OF_RANGE_CACHE_EXCEPTION", 1);
         }
 
         $success = false;
 
-        $metadata = apc_fetch( $this->prefixKey . $key, $success );
+        $metadata = apc_fetch($this->prefixKey . $key, $success);
 
-        return new Item( $key, $metadata );
+        return new Item($key, $metadata);
     }
 
     // ------------------------------------------------------------------------
@@ -121,13 +122,13 @@ class ItemPool extends Adapter
      * @return bool
      *   True if item exists in the cache, false otherwise.
      */
-    public function hasItem( $key )
+    public function hasItem($key)
     {
-        if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION' );
+        if ( ! is_string($key)) {
+            throw new InvalidArgumentException('E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION');
         }
 
-        return (bool)apc_exists( $this->prefixKey . $key );
+        return (bool)apc_exists($this->prefixKey . $key);
     }
 
     // ------------------------------------------------------------------------
@@ -142,7 +143,7 @@ class ItemPool extends Adapter
      */
     public function clear()
     {
-        return apc_clear_cache( 'user' );
+        return apc_clear_cache('user');
     }
 
     // ------------------------------------------------------------------------
@@ -162,13 +163,13 @@ class ItemPool extends Adapter
      * @return bool
      *   True if the item was successfully removed. False if there was an error.
      */
-    public function deleteItem( $key )
+    public function deleteItem($key)
     {
-        if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION' );
+        if ( ! is_string($key)) {
+            throw new InvalidArgumentException('E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION');
         }
 
-        return apc_delete( $this->prefixKey . $key );
+        return apc_delete($this->prefixKey . $key);
     }
 
     // ------------------------------------------------------------------------
@@ -184,11 +185,11 @@ class ItemPool extends Adapter
      * @return bool
      *   True if the item was successfully persisted. False if there was an error.
      */
-    public function save( CacheItemInterface $item )
+    public function save(CacheItemInterface $item)
     {
         $metadata = $item->getMetadata();
         $metadata[ 'data' ] = $item->get();
 
-        return apc_store( $this->prefixKey . $item->getKey(), $metadata, $metadata[ 'ttl' ] );
+        return apc_store($this->prefixKey . $item->getKey(), $metadata, $metadata[ 'ttl' ]);
     }
 }

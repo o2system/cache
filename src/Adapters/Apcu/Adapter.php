@@ -8,6 +8,7 @@
  * @author         Steeve Andrian Salim
  * @copyright      Copyright (c) Steeve Andrian Salim
  */
+
 // ------------------------------------------------------------------------
 
 namespace O2System\Cache\Adapters\Apcu;
@@ -41,7 +42,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return void
      */
-    public function connect( array $config )
+    public function connect(array $config)
     {
         $this->config = $config;
 
@@ -60,10 +61,10 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return bool
      */
-    public function increment( $key, $step = 1 )
+    public function increment($key, $step = 1)
     {
         $success = false;
-        apcu_inc( $this->prefixKey . $key, $step, $success );
+        apcu_inc($this->prefixKey . $key, $step, $success);
 
         return $success;
     }
@@ -80,10 +81,10 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed New value on success or FALSE on failure.
      */
-    public function decrement( $key, $step = 1 )
+    public function decrement($key, $step = 1)
     {
         $success = false;
-        apcu_dec( $this->prefixKey . $key, $step, $success );
+        apcu_dec($this->prefixKey . $key, $step, $success);
 
         return $success;
     }
@@ -99,9 +100,9 @@ abstract class Adapter extends AbstractAdapter
      */
     public function getInfo()
     {
-        @list( $limited ) = func_get_args();
+        @list($limited) = func_get_args();
 
-        return apcu_cache_info( @$limited );
+        return apcu_cache_info(@$limited);
     }
 
     // ------------------------------------------------------------------------
@@ -115,9 +116,9 @@ abstract class Adapter extends AbstractAdapter
      */
     public function getStats()
     {
-        @list( $limited ) = func_get_args();
+        @list($limited) = func_get_args();
 
-        return apcu_sma_info( @$limited );
+        return apcu_sma_info(@$limited);
     }
 
     // ------------------------------------------------------------------------
@@ -131,7 +132,7 @@ abstract class Adapter extends AbstractAdapter
      */
     public function isSupported()
     {
-        return (bool)( extension_loaded( 'apcu' ) && ini_get( 'apc.enabled' ) );
+        return (bool)(extension_loaded('apcu') && ini_get('apc.enabled'));
     }
 
     /**
@@ -143,6 +144,6 @@ abstract class Adapter extends AbstractAdapter
      */
     public function isConnected()
     {
-        return (bool) function_exists('apcu_cache_info');
+        return (bool)function_exists('apcu_cache_info');
     }
 }

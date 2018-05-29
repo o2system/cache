@@ -8,6 +8,7 @@
  * @author         Steeve Andrian Salim
  * @copyright      Copyright (c) Steeve Andrian Salim
  */
+
 // ------------------------------------------------------------------------
 
 namespace O2System\Cache\Abstracts;
@@ -60,24 +61,35 @@ abstract class AbstractAdapter extends AbstractItemPool implements CacheItemPool
      * @return AbstractAdapter
      * @throws BadDependencyCallException
      */
-    public function __construct( Config $config = null )
+    public function __construct(Config $config = null)
     {
         language()
-            ->addFilePath( str_replace( 'Abstracts', '', __DIR__ ) . DIRECTORY_SEPARATOR )
-            ->loadFile( 'cache' );
+            ->addFilePath(str_replace('Abstracts', '', __DIR__) . DIRECTORY_SEPARATOR)
+            ->loadFile('cache');
 
-        if ( isset( $config ) ) {
-            if ( $this->isSupported() ) {
-                $this->connect( $config->getArrayCopy() );
+        if (isset($config)) {
+            if ($this->isSupported()) {
+                $this->connect($config->getArrayCopy());
 
-                if ( $config->offsetExists( 'prefixKey' ) ) {
-                    $this->setPrefixKey( $config->prefixKey );
+                if ($config->offsetExists('prefixKey')) {
+                    $this->setPrefixKey($config->prefixKey);
                 }
             } else {
-                throw new BadDependencyCallException( 'E_UNSUPPORTED_ADAPTER_CACHE_EXCEPTION', 0, [ $this->platform ] );
+                throw new BadDependencyCallException('E_UNSUPPORTED_ADAPTER_CACHE_EXCEPTION', 0, [$this->platform]);
             }
         }
     }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * AbstractAdapter::isSupported
+     *
+     * Checks if this adapter is supported on this system.
+     *
+     * @return bool Returns FALSE if not supported.
+     */
+    abstract public function isSupported();
 
     // ------------------------------------------------------------------------
 
@@ -88,9 +100,9 @@ abstract class AbstractAdapter extends AbstractItemPool implements CacheItemPool
      *
      * @param $prefixKey
      */
-    public function setPrefixKey( $prefixKey )
+    public function setPrefixKey($prefixKey)
     {
-        $this->prefixKey = rtrim( $prefixKey, ':' ) . ':';
+        $this->prefixKey = rtrim($prefixKey, ':') . ':';
     }
 
     // ------------------------------------------------------------------------
@@ -106,17 +118,6 @@ abstract class AbstractAdapter extends AbstractItemPool implements CacheItemPool
     {
         return $this->platform;
     }
-
-    // ------------------------------------------------------------------------
-
-    /**
-     * AbstractAdapter::isSupported
-     *
-     * Checks if this adapter is supported on this system.
-     *
-     * @return bool Returns FALSE if not supported.
-     */
-    abstract public function isSupported();
 
     // ------------------------------------------------------------------------
 

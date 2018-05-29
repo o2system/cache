@@ -8,6 +8,7 @@
  * @author         Steeve Andrian Salim
  * @copyright      Copyright (c) Steeve Andrian Salim
  */
+
 // ------------------------------------------------------------------------
 
 namespace O2System\Cache\Adapters\File;
@@ -44,30 +45,30 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      *   key is not found. However, if no keys are specified then an empty
      *   traversable MUST be returned instead.
      */
-    public function getItems( array $keys = [] )
+    public function getItems(array $keys = [])
     {
-        if ( ! is_array( $keys ) ) {
-            throw new InvalidArgumentException( 'CACHE_E_INVALID_ARGUMENT_ARRAY' );
+        if ( ! is_array($keys)) {
+            throw new InvalidArgumentException('CACHE_E_INVALID_ARGUMENT_ARRAY');
         }
 
         $items = [];
 
-        if ( empty( $keys ) ) {
+        if (empty($keys)) {
             $directory = new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator( $this->path ),
+                new \RecursiveDirectoryIterator($this->path),
                 \RecursiveIteratorIterator::SELF_FIRST
             );
 
-            $cacheIterator = new \RegexIterator( $directory, '/^.+\.cache/i', \RecursiveRegexIterator::GET_MATCH );
+            $cacheIterator = new \RegexIterator($directory, '/^.+\.cache/i', \RecursiveRegexIterator::GET_MATCH);
 
-            foreach ( $cacheIterator as $cacheFiles ) {
-                foreach ( $cacheFiles as $cacheFile ) {
-                    $items[] = $this->getItem( pathinfo( $cacheFile, PATHINFO_FILENAME ) );
+            foreach ($cacheIterator as $cacheFiles) {
+                foreach ($cacheFiles as $cacheFile) {
+                    $items[] = $this->getItem(pathinfo($cacheFile, PATHINFO_FILENAME));
                 }
             }
-        } elseif ( count( $keys ) ) {
-            foreach ( $keys as $key ) {
-                $items[] = $this->getItem( $key );
+        } elseif (count($keys)) {
+            foreach ($keys as $key) {
+                $items[] = $this->getItem($key);
             }
         }
 
@@ -94,25 +95,25 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      * @return CacheItemInterface
      *   The corresponding Cache Item.
      */
-    public function getItem( $key )
+    public function getItem($key)
     {
-        if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'CACHE_E_INVALID_ARGUMENT_STRING' );
+        if ( ! is_string($key)) {
+            throw new InvalidArgumentException('CACHE_E_INVALID_ARGUMENT_STRING');
         }
 
         $filename = $this->path . $key . '.cache';
 
-        if ( is_file( $filename ) ) {
-            $metadata = unserialize( file_get_contents( $filename ) );
+        if (is_file($filename)) {
+            $metadata = unserialize(file_get_contents($filename));
 
-            if ( $metadata[ 'ttl' ] > 0 AND time() > $metadata[ 'ctime' ] + $metadata[ 'ttl' ] ) {
-                unlink( $filename );
+            if ($metadata[ 'ttl' ] > 0 AND time() > $metadata[ 'ctime' ] + $metadata[ 'ttl' ]) {
+                unlink($filename);
             }
 
-            return new Item( $key, $metadata );
+            return new Item($key, $metadata);
         }
 
-        return new Item( $key );
+        return new Item($key);
     }
 
     // ------------------------------------------------------------------------
@@ -136,15 +137,15 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      * @return bool
      *   True if item exists in the cache, false otherwise.
      */
-    public function hasItem( $key )
+    public function hasItem($key)
     {
-        if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'CACHE_E_INVALID_ARGUMENT_STRING' );
+        if ( ! is_string($key)) {
+            throw new InvalidArgumentException('CACHE_E_INVALID_ARGUMENT_STRING');
         }
 
         $filename = $this->path . $key . '.cache';
 
-        return (bool)is_file( $filename );
+        return (bool)is_file($filename);
     }
 
     // ------------------------------------------------------------------------
@@ -160,17 +161,17 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
     public function clear()
     {
         $directory = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator( $this->path ),
+            new \RecursiveDirectoryIterator($this->path),
             \RecursiveIteratorIterator::SELF_FIRST
         );
 
-        $cacheIterator = new \RegexIterator( $directory, '/^.+\.cache/i', \RecursiveRegexIterator::GET_MATCH );
+        $cacheIterator = new \RegexIterator($directory, '/^.+\.cache/i', \RecursiveRegexIterator::GET_MATCH);
 
         $isCleared = false;
 
-        foreach ( $cacheIterator as $cacheFiles ) {
-            foreach ( $cacheFiles as $cacheFile ) {
-                if ( false === ( $isCleared = unlink( $cacheFile ) ) ) {
+        foreach ($cacheIterator as $cacheFiles) {
+            foreach ($cacheFiles as $cacheFile) {
+                if (false === ($isCleared = unlink($cacheFile))) {
                     return $isCleared;
                     break;
                 }
@@ -197,16 +198,16 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      * @return bool
      *   True if the item was successfully removed. False if there was an error.
      */
-    public function deleteItem( $key )
+    public function deleteItem($key)
     {
-        if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'CACHE_E_INVALID_ARGUMENT_STRING' );
+        if ( ! is_string($key)) {
+            throw new InvalidArgumentException('CACHE_E_INVALID_ARGUMENT_STRING');
         }
 
         $filename = $this->path . $key . '.cache';
 
-        if ( is_file( $filename ) ) {
-            return unlink( $filename );
+        if (is_file($filename)) {
+            return unlink($filename);
         }
 
         return false;
@@ -225,29 +226,29 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      * @return bool
      *   True if the item was successfully persisted. False if there was an error.
      */
-    public function save( CacheItemInterface $item )
+    public function save(CacheItemInterface $item)
     {
         $metadata = $item->getMetadata();
         $metadata[ 'data' ] = $item->get();
-        $metadata = serialize( $metadata );
+        $metadata = serialize($metadata);
 
         $path = $this->path . $this->prefixKey . $item->getKey() . '.cache';
 
-        if ( ! $fp = @fopen( $path, 'wb' ) ) {
+        if ( ! $fp = @fopen($path, 'wb')) {
             return false;
         }
 
-        flock( $fp, LOCK_EX );
+        flock($fp, LOCK_EX);
 
-        for ( $result = $written = 0, $length = strlen( $metadata ); $written < $length; $written += $result ) {
-            if ( ( $result = fwrite( $fp, substr( $metadata, $written ) ) ) === false ) {
+        for ($result = $written = 0, $length = strlen($metadata); $written < $length; $written += $result) {
+            if (($result = fwrite($fp, substr($metadata, $written))) === false) {
                 break;
             }
         }
 
-        flock( $fp, LOCK_UN );
-        fclose( $fp );
+        flock($fp, LOCK_UN);
+        fclose($fp);
 
-        return (bool)is_int( $result );
+        return (bool)is_int($result);
     }
 }

@@ -8,6 +8,7 @@
  * @author         Steeve Andrian Salim
  * @copyright      Copyright (c) Steeve Andrian Salim
  */
+
 // ------------------------------------------------------------------------
 
 namespace O2System\Cache\Adapters\Xcache;
@@ -25,7 +26,7 @@ abstract class Adapter extends AbstractAdapter
 {
     /**
      * Adapter::$paltform
-     * 
+     *
      * Adapter Platform Name
      *
      * @var string
@@ -41,7 +42,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return void
      */
-    public function connect( array $config )
+    public function connect(array $config)
     {
         $this->config = $config;
 
@@ -60,9 +61,9 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed New value on success or FALSE on failure.
      */
-    public function increment( $key, $step = 1 )
+    public function increment($key, $step = 1)
     {
-        return xcache_inc( $this->prefixKey . $key, $step );
+        return xcache_inc($this->prefixKey . $key, $step);
     }
 
     // ------------------------------------------------------------------------
@@ -77,9 +78,9 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed New value on success or FALSE on failure.
      */
-    public function decrement( $key, $step = 1 )
+    public function decrement($key, $step = 1)
     {
-        return xcache_dec( $this->prefixKey . $key, $step );
+        return xcache_dec($this->prefixKey . $key, $step);
     }
 
     // ------------------------------------------------------------------------
@@ -93,7 +94,7 @@ abstract class Adapter extends AbstractAdapter
      */
     public function getInfo()
     {
-        return xcache_list( XC_TYPE_VAR, 0 );
+        return xcache_list(XC_TYPE_VAR, 0);
     }
 
     // ------------------------------------------------------------------------
@@ -107,7 +108,7 @@ abstract class Adapter extends AbstractAdapter
      */
     public function getStats()
     {
-        return xcache_info( XC_TYPE_VAR, 0 );
+        return xcache_info(XC_TYPE_VAR, 0);
     }
 
     // ------------------------------------------------------------------------
@@ -121,7 +122,7 @@ abstract class Adapter extends AbstractAdapter
      */
     public function isSupported()
     {
-        return (bool)extension_loaded( 'xcache' );
+        return (bool)extension_loaded('xcache');
     }
 
     // ------------------------------------------------------------------------
@@ -135,6 +136,6 @@ abstract class Adapter extends AbstractAdapter
      */
     public function isConnected()
     {
-        return (bool)( function_exists( 'xcache_info' ) );
+        return (bool)(function_exists('xcache_info'));
     }
 }

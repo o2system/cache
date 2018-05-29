@@ -8,6 +8,7 @@
  * @author         Steeve Andrian Salim
  * @copyright      Copyright (c) Steeve Andrian Salim
  */
+
 // ------------------------------------------------------------------------
 
 namespace O2System\Cache\Adapters\Xcache;
@@ -44,27 +45,27 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      *   key is not found. However, if no keys are specified then an empty
      *   traversable MUST be returned instead.
      */
-    public function getItems( array $keys = [] )
+    public function getItems(array $keys = [])
     {
-        if ( ! is_array( $keys ) ) {
-            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_ARRAY_CACHE_EXCEPTION' );
+        if ( ! is_array($keys)) {
+            throw new InvalidArgumentException('E_INVALID_ARGUMENT_ARRAY_CACHE_EXCEPTION');
         }
 
         $items = [];
 
-        if ( empty( $keys ) ) {
-            $allItems = xcache_list( XC_TYPE_VAR, 0 );
+        if (empty($keys)) {
+            $allItems = xcache_list(XC_TYPE_VAR, 0);
 
-            foreach ( $allItems as $allItem ) {
-                foreach ( $allItem as $item ) {
-                    if ( isset( $item[ 'name' ] ) ) {
-                        $items[] = $this->getItem( str_replace( $this->prefixKey, '', $item[ 'name' ] ) );
+            foreach ($allItems as $allItem) {
+                foreach ($allItem as $item) {
+                    if (isset($item[ 'name' ])) {
+                        $items[] = $this->getItem(str_replace($this->prefixKey, '', $item[ 'name' ]));
                     }
                 }
             }
-        } elseif ( count( $keys ) ) {
-            foreach ( $keys as $key ) {
-                $items[] = $this->getItem( $key );
+        } elseif (count($keys)) {
+            foreach ($keys as $key) {
+                $items[] = $this->getItem($key);
             }
         }
 
@@ -91,15 +92,15 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      * @return CacheItemInterface
      *   The corresponding Cache Item.
      */
-    public function getItem( $key )
+    public function getItem($key)
     {
-        if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION' );
+        if ( ! is_string($key)) {
+            throw new InvalidArgumentException('E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION');
         }
 
-        $metadata = xcache_get( $this->prefixKey . $key );
+        $metadata = xcache_get($this->prefixKey . $key);
 
-        return new Item( $key, $metadata );
+        return new Item($key, $metadata);
     }
 
     // ------------------------------------------------------------------------
@@ -123,13 +124,13 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      * @return bool
      *   True if item exists in the cache, false otherwise.
      */
-    public function hasItem( $key )
+    public function hasItem($key)
     {
-        if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION' );
+        if ( ! is_string($key)) {
+            throw new InvalidArgumentException('E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION');
         }
 
-        return (bool)xcache_isset( $this->prefixKey . $key );
+        return (bool)xcache_isset($this->prefixKey . $key);
     }
 
     // ------------------------------------------------------------------------
@@ -144,7 +145,7 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      */
     public function clear()
     {
-        return call_user_func_array( 'xcache_clear_cache', func_get_args() );
+        return call_user_func_array('xcache_clear_cache', func_get_args());
     }
 
     // ------------------------------------------------------------------------
@@ -164,13 +165,13 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      * @return bool
      *   True if the item was successfully removed. False if there was an error.
      */
-    public function deleteItem( $key )
+    public function deleteItem($key)
     {
-        if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION' );
+        if ( ! is_string($key)) {
+            throw new InvalidArgumentException('E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION');
         }
 
-        return (bool)xcache_unset( $this->prefixKey . $key );
+        return (bool)xcache_unset($this->prefixKey . $key);
     }
 
     // ------------------------------------------------------------------------
@@ -186,11 +187,11 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      * @return bool
      *   True if the item was successfully persisted. False if there was an error.
      */
-    public function save( CacheItemInterface $item )
+    public function save(CacheItemInterface $item)
     {
         $metadata = $item->getMetadata();
         $metadata[ 'data' ] = $item->get();
 
-        return xcache_set( $this->prefixKey . $item->getKey(), $metadata, $metadata[ 'ttl' ] );
+        return xcache_set($this->prefixKey . $item->getKey(), $metadata, $metadata[ 'ttl' ]);
     }
 }

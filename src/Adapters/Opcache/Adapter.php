@@ -8,6 +8,7 @@
  * @author         Steeve Andrian Salim
  * @copyright      Copyright (c) Steeve Andrian Salim
  */
+
 // ------------------------------------------------------------------------
 
 namespace O2System\Cache\Adapters\Opcache;
@@ -25,7 +26,7 @@ abstract class Adapter extends AbstractAdapter
 {
     /**
      * Adapter::$platform
-     * 
+     *
      * Adapter Platform Name
      *
      * @var string
@@ -41,7 +42,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return void
      */
-    public function connect( array $config )
+    public function connect(array $config)
     {
         $this->config = $config;
 
@@ -60,9 +61,9 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed New value on success or FALSE on failure.
      */
-    public function increment( $key, $step = 1 )
+    public function increment($key, $step = 1)
     {
-        return apc_inc( $this->prefixKey . $key, $step );
+        return apc_inc($this->prefixKey . $key, $step);
     }
 
     // ------------------------------------------------------------------------
@@ -77,9 +78,9 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed New value on success or FALSE on failure.
      */
-    public function decrement( $key, $step = 1 )
+    public function decrement($key, $step = 1)
     {
-        return apc_dec( $this->prefixKey . $key, $step );
+        return apc_dec($this->prefixKey . $key, $step);
     }
 
     // ------------------------------------------------------------------------
@@ -107,7 +108,7 @@ abstract class Adapter extends AbstractAdapter
      */
     public function getStats()
     {
-        return call_user_func_array( 'opcache_get_status', func_get_args() );
+        return call_user_func_array('opcache_get_status', func_get_args());
     }
 
     // ------------------------------------------------------------------------
@@ -121,7 +122,7 @@ abstract class Adapter extends AbstractAdapter
      */
     public function isSupported()
     {
-        return (bool)( extension_loaded( 'Zend OPCache' ) && ini_get( 'opcache.enable' ) );
+        return (bool)(extension_loaded('Zend OPCache') && ini_get('opcache.enable'));
     }
 
     // ------------------------------------------------------------------------
@@ -135,6 +136,6 @@ abstract class Adapter extends AbstractAdapter
      */
     public function isConnected()
     {
-        return (bool) ( function_exists('opcache_get_status') );
+        return (bool)(function_exists('opcache_get_status'));
     }
 }

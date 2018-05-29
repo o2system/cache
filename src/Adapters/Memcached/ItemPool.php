@@ -8,6 +8,7 @@
  * @author         Steeve Andrian Salim
  * @copyright      Copyright (c) Steeve Andrian Salim
  */
+
 // ------------------------------------------------------------------------
 
 namespace O2System\Cache\Adapters\Memcached;
@@ -44,29 +45,29 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      *   key is not found. However, if no keys are specified then an empty
      *   traversable MUST be returned instead.
      */
-    public function getItems( array $keys = [] )
+    public function getItems(array $keys = [])
     {
-        if ( ! is_array( $keys ) ) {
-            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_ARRAY_CACHE_EXCEPTION' );
+        if ( ! is_array($keys)) {
+            throw new InvalidArgumentException('E_INVALID_ARGUMENT_ARRAY_CACHE_EXCEPTION');
         }
 
         $items = [];
 
-        if ( empty( $keys ) ) {
+        if (empty($keys)) {
             $allItems = $this->memcached->getAllKeys();
 
-            foreach ( $allItems as $server => $metadata ) {
-                foreach ( $metadata[ 'items' ] AS $itemKey => $itemMetadata ) {
-                    $cacheDump = $this->memcached->getExtendedStats( 'cachedump', (int)$itemKey );
+            foreach ($allItems as $server => $metadata) {
+                foreach ($metadata[ 'items' ] AS $itemKey => $itemMetadata) {
+                    $cacheDump = $this->memcached->getExtendedStats('cachedump', (int)$itemKey);
 
-                    foreach ( $cacheDump[ $server ] AS $cacheDumpItemKey => $cacheDumpItemMetadata ) {
-                        $items[] = $this->getItem( str_replace( $this->prefixKey, '', $cacheDumpItemKey ) );
+                    foreach ($cacheDump[ $server ] AS $cacheDumpItemKey => $cacheDumpItemMetadata) {
+                        $items[] = $this->getItem(str_replace($this->prefixKey, '', $cacheDumpItemKey));
                     }
                 }
             }
-        } elseif ( count( $keys ) ) {
-            foreach ( $keys as $key ) {
-                $items[] = $this->getItem( $key );
+        } elseif (count($keys)) {
+            foreach ($keys as $key) {
+                $items[] = $this->getItem($key);
             }
         }
 
@@ -93,16 +94,16 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      * @return CacheItemInterface
      *   The corresponding Cache Item.
      */
-    public function getItem( $key )
+    public function getItem($key)
     {
-        if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION' );
+        if ( ! is_string($key)) {
+            throw new InvalidArgumentException('E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION');
         }
 
-        $metadata = $this->memcached->get( $this->prefixKey . $key );
-        $metadata = isset( $metadata[ 0 ] ) ? $metadata[ 0 ] : $metadata;
+        $metadata = $this->memcached->get($this->prefixKey . $key);
+        $metadata = isset($metadata[ 0 ]) ? $metadata[ 0 ] : $metadata;
 
-        return new Item( $key, $metadata );
+        return new Item($key, $metadata);
     }
 
     // ------------------------------------------------------------------------
@@ -126,13 +127,13 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      * @return bool
      *   True if item exists in the cache, false otherwise.
      */
-    public function hasItem( $key )
+    public function hasItem($key)
     {
-        if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION' );
+        if ( ! is_string($key)) {
+            throw new InvalidArgumentException('E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION');
         }
 
-        return (bool)$this->memcached->get( $this->prefixKey . $key );
+        return (bool)$this->memcached->get($this->prefixKey . $key);
     }
 
     // ------------------------------------------------------------------------
@@ -167,13 +168,13 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      * @return bool
      *   True if the item was successfully removed. False if there was an error.
      */
-    public function deleteItem( $key )
+    public function deleteItem($key)
     {
-        if ( ! is_string( $key ) ) {
-            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION' );
+        if ( ! is_string($key)) {
+            throw new InvalidArgumentException('E_INVALID_ARGUMENT_STRING_CACHE_EXCEPTION');
         }
 
-        return $this->memcached->delete( $this->prefixKey . $key );
+        return $this->memcached->delete($this->prefixKey . $key);
     }
 
     // ------------------------------------------------------------------------
@@ -193,20 +194,20 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      * @return bool
      *   True if the items were successfully removed. False if there was an error.
      */
-    public function deleteItems( array $keys )
+    public function deleteItems(array $keys)
     {
-        if ( ! is_array( $keys ) ) {
-            throw new InvalidArgumentException( 'E_INVALID_ARGUMENT_ARRAY_CACHE_EXCEPTION' );
+        if ( ! is_array($keys)) {
+            throw new InvalidArgumentException('E_INVALID_ARGUMENT_ARRAY_CACHE_EXCEPTION');
         }
 
         $keys = array_map(
-            function ( $key ) {
+            function ($key) {
                 return $this->prefixKey . $key;
             },
             $keys
         );
 
-        return $this->memcached->deleteMulti( $keys );
+        return $this->memcached->deleteMulti($keys);
     }
 
     // ------------------------------------------------------------------------
@@ -222,11 +223,11 @@ class ItemPool extends Adapter implements CacheItemPoolInterface
      * @return bool
      *   True if the item was successfully persisted. False if there was an error.
      */
-    public function save( CacheItemInterface $item )
+    public function save(CacheItemInterface $item)
     {
         $metadata = $item->getMetadata();
         $metadata[ 'data' ] = $item->get();
 
-        return $this->memcached->set( $this->prefixKey . $item->getKey(), $metadata, $metadata[ 'ttl' ] );
+        return $this->memcached->set($this->prefixKey . $item->getKey(), $metadata, $metadata[ 'ttl' ]);
     }
 }

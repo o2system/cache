@@ -8,6 +8,7 @@
  * @author         Steeve Andrian Salim
  * @copyright      Copyright (c) Steeve Andrian Salim
  */
+
 // ------------------------------------------------------------------------
 
 namespace O2System\Cache\Adapters\Wincache;
@@ -25,7 +26,7 @@ abstract class Adapter extends AbstractAdapter
 {
     /**
      * Adapter::$platform
-     * 
+     *
      * Adapter Platform Name
      *
      * @var string
@@ -41,7 +42,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return void
      */
-    public function connect( array $config )
+    public function connect(array $config)
     {
         $this->config = $config;
 
@@ -60,11 +61,11 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed Returns the incremented value on success and FALSE on failure.
      */
-    public function increment( $key, $step = 1 )
+    public function increment($key, $step = 1)
     {
         $success = false;
 
-        return wincache_ucache_inc( $this->prefixKey . $key, $step, $success );
+        return wincache_ucache_inc($this->prefixKey . $key, $step, $success);
     }
 
     // ------------------------------------------------------------------------
@@ -79,11 +80,11 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed New value on success or FALSE on failure.
      */
-    public function decrement( $key, $step = 1 )
+    public function decrement($key, $step = 1)
     {
         $success = false;
 
-        return wincache_ucache_dec( $this->prefixKey . $key, $step, $success );
+        return wincache_ucache_dec($this->prefixKey . $key, $step, $success);
     }
 
     // ------------------------------------------------------------------------
@@ -97,9 +98,9 @@ abstract class Adapter extends AbstractAdapter
      */
     public function getInfo()
     {
-        @list( $summaryOnly, $key ) = func_get_args();
+        @list($summaryOnly, $key) = func_get_args();
 
-        return wincache_ucache_info( @$summaryOnly, @$key );
+        return wincache_ucache_info(@$summaryOnly, @$key);
     }
 
     // ------------------------------------------------------------------------
@@ -127,7 +128,7 @@ abstract class Adapter extends AbstractAdapter
      */
     public function isSupported()
     {
-        return (bool)( extension_loaded( 'wincache' ) && ini_get( 'wincache.ucenabled' ) );
+        return (bool)(extension_loaded('wincache') && ini_get('wincache.ucenabled'));
     }
 
     // ------------------------------------------------------------------------
@@ -141,6 +142,6 @@ abstract class Adapter extends AbstractAdapter
      */
     public function isConnected()
     {
-        return (bool)( function_exists('wincache_ucache_meminfo') );
+        return (bool)(function_exists('wincache_ucache_meminfo'));
     }
 }

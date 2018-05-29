@@ -8,6 +8,7 @@
  * @author         Steeve Andrian Salim
  * @copyright      Copyright (c) Steeve Andrian Salim
  */
+
 // ------------------------------------------------------------------------
 
 namespace O2System\Cache;
@@ -33,14 +34,14 @@ class Adapters extends AbstractProvider implements ValidationInterface
      *
      * @return Adapters
      */
-    public function __construct( Datastructures\Config $config )
+    public function __construct(Datastructures\Config $config)
     {
-        if ( $config->offsetExists( 'default' ) ) {
-            foreach ( $config as $poolOffset => $poolConfig ) {
-                $this->createItemPool( $poolOffset, $poolConfig );
+        if ($config->offsetExists('default')) {
+            foreach ($config as $poolOffset => $poolConfig) {
+                $this->createItemPool($poolOffset, $poolConfig);
             }
-        } elseif ( $config->offsetExists( 'adapter' ) ) {
-            $this->createItemPool( 'default', $config );
+        } elseif ($config->offsetExists('adapter')) {
+            $this->createItemPool('default', $config);
         }
     }
 
@@ -54,16 +55,16 @@ class Adapters extends AbstractProvider implements ValidationInterface
      * @param string                $poolOffset
      * @param Datastructures\Config $poolConfig
      */
-    public function createItemPool( $poolOffset, Datastructures\Config $poolConfig )
+    public function createItemPool($poolOffset, Datastructures\Config $poolConfig)
     {
-        $adapterClassName = '\O2System\Cache\Adapters\\' . ucfirst( $poolConfig->adapter ) . '\ItemPool';
+        $adapterClassName = '\O2System\Cache\Adapters\\' . ucfirst($poolConfig->adapter) . '\ItemPool';
 
-        if ( class_exists( $adapterClassName ) ) {
-            $adapter = new $adapterClassName( $poolConfig );
+        if (class_exists($adapterClassName)) {
+            $adapter = new $adapterClassName($poolConfig);
 
-            if($adapter instanceof AbstractAdapter) {
-                if( $adapter->isSupported() ) {
-                    $this->register( $adapter, $poolOffset );
+            if ($adapter instanceof AbstractAdapter) {
+                if ($adapter->isSupported()) {
+                    $this->register($adapter, $poolOffset);
                 }
             }
         }
@@ -80,16 +81,16 @@ class Adapters extends AbstractProvider implements ValidationInterface
      *
      * @return mixed
      */
-    public function &getItemPool( $poolOffset )
+    public function &getItemPool($poolOffset)
     {
-        return $this->getObject( $poolOffset );
+        return $this->getObject($poolOffset);
     }
 
     // ------------------------------------------------------------------------
 
-    public function hasItemPool( $poolOffset )
+    public function hasItemPool($poolOffset)
     {
-        return $this->__isset( $poolOffset );
+        return $this->__isset($poolOffset);
     }
 
     // ------------------------------------------------------------------------
@@ -103,9 +104,9 @@ class Adapters extends AbstractProvider implements ValidationInterface
      *
      * @return bool
      */
-    public function validate( $value )
+    public function validate($value)
     {
-        if ( $value instanceof AbstractItemPool ) {
+        if ($value instanceof AbstractItemPool) {
             return true;
         }
 

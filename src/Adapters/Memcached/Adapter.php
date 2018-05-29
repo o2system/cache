@@ -8,6 +8,7 @@
  * @author         Steeve Andrian Salim
  * @copyright      Copyright (c) Steeve Andrian Salim
  */
+
 // ------------------------------------------------------------------------
 
 namespace O2System\Cache\Adapters\Memcached;
@@ -27,7 +28,7 @@ abstract class Adapter extends AbstractAdapter
 {
     /**
      * Adapter::$platform
-     * 
+     *
      * Adapter Platform Name
      *
      * @var string
@@ -38,7 +39,7 @@ abstract class Adapter extends AbstractAdapter
 
     /**
      * Adapter::$memchached
-     * 
+     *
      * Memcached Instance
      *
      * @var \Memcached
@@ -54,18 +55,18 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return Adapter
      */
-    public function __construct( Config $config = null )
+    public function __construct(Config $config = null)
     {
-        if ( isset( $config ) ) {
-            if ( $this->isSupported() ) {
-                $this->connect( $config->getArrayCopy() );
+        if (isset($config)) {
+            if ($this->isSupported()) {
+                $this->connect($config->getArrayCopy());
 
-                if ( $config->offsetExists( 'prefixKey' ) ) {
-                    $this->setPrefixKey( $config->prefixKey );
+                if ($config->offsetExists('prefixKey')) {
+                    $this->setPrefixKey($config->prefixKey);
                 }
             }
-        } elseif ( $this->isSupported() ) {
-            $this->connect( [] );
+        } elseif ($this->isSupported()) {
+            $this->connect([]);
         }
     }
 
@@ -80,21 +81,7 @@ abstract class Adapter extends AbstractAdapter
      */
     public function isSupported()
     {
-        return (bool)( extension_loaded( 'memcached' ) && class_exists( 'Memcached', false ) );
-    }
-
-    // ------------------------------------------------------------------------
-
-    /**
-     * Adapter::isConnected
-     *
-     * Checks if this adapter has a successful connection.
-     *
-     * @return bool Returns FALSE if not supported.
-     */
-    public function isConnected()
-    {
-        return (bool)( $this->memcached instanceof \Memcached );
+        return (bool)(extension_loaded('memcached') && class_exists('Memcached', false));
     }
 
     // ------------------------------------------------------------------------
@@ -106,21 +93,21 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return void
      */
-    public function connect( array $config )
+    public function connect(array $config)
     {
         $this->memcached = new \Memcached();
-        $this->memcached->setOption( \Memcached::OPT_BINARY_PROTOCOL, false );
+        $this->memcached->setOption(\Memcached::OPT_BINARY_PROTOCOL, false);
 
-        if ( empty( $config ) ) {
+        if (empty($config)) {
             $this->config = [
                 'host'   => '127.0.0.1',
                 'port'   => 11211,
                 'weight' => 1,
             ];
 
-            $this->memcached->addserver( $this->config[ 'host' ], $this->config[ 'port' ] );
-        } elseif ( isset( $config[ 'servers' ] ) ) {
-            foreach ( $config[ 'servers' ] as $server ) {
+            $this->memcached->addserver($this->config[ 'host' ], $this->config[ 'port' ]);
+        } elseif (isset($config[ 'servers' ])) {
+            foreach ($config[ 'servers' ] as $server) {
                 $this->config[ $server[ 'host' ] ] = array_merge(
                     [
                         'host'   => '127.0.0.1',
@@ -130,8 +117,8 @@ abstract class Adapter extends AbstractAdapter
                     $server
                 );
 
-                if ( array_key_exists( 'status', $server ) ) {
-                    if ( $server[ 'status' ] === false ) {
+                if (array_key_exists('status', $server)) {
+                    if ($server[ 'status' ] === false) {
                         $this->config[ $server[ 'host' ] ][ 'retryInterval' ] = -1;
 
                         $this->memcached->addserver(
@@ -160,8 +147,8 @@ abstract class Adapter extends AbstractAdapter
                 $config
             );
 
-            if ( isset( $this->config[ 'status' ] ) ) {
-                if ( $this->config[ 'status' ] === false ) {
+            if (isset($this->config[ 'status' ])) {
+                if ($this->config[ 'status' ] === false) {
                     $this->memcached->addserver(
                         $this->config[ 'host' ],
                         $this->config[ 'port' ],
@@ -184,6 +171,20 @@ abstract class Adapter extends AbstractAdapter
         }
     }
 
+    // ------------------------------------------------------------------------
+
+    /**
+     * Adapter::isConnected
+     *
+     * Checks if this adapter has a successful connection.
+     *
+     * @return bool Returns FALSE if not supported.
+     */
+    public function isConnected()
+    {
+        return (bool)($this->memcached instanceof \Memcached);
+    }
+
     /**
      * Adapter::__call
      *
@@ -193,15 +194,15 @@ abstract class Adapter extends AbstractAdapter
      * @return mixed
      * @throws \O2System\Spl\Exceptions\Logic\BadFunctionCall\BadMethodCallException
      */
-    public function __call( $method, array $arguments = [] )
+    public function __call($method, array $arguments = [])
     {
-        if ( method_exists( $this, $method ) ) {
-            return call_user_func_array( [ &$this, $method ], $arguments );
-        } elseif ( $this->memcached instanceof \Memcache AND method_exists( $this->memcached, $method ) ) {
-            return call_user_func_array( [ &$this->memcached, $method ], $arguments );
+        if (method_exists($this, $method)) {
+            return call_user_func_array([&$this, $method], $arguments);
+        } elseif ($this->memcached instanceof \Memcache AND method_exists($this->memcached, $method)) {
+            return call_user_func_array([&$this->memcached, $method], $arguments);
         }
 
-        throw new BadMethodCallException( 'E_BAD_METHOD_CALL_CACHE_EXCEPTION', 0, [ __CLASS__ . '::' . $method ] );
+        throw new BadMethodCallException('E_BAD_METHOD_CALL_CACHE_EXCEPTION', 0, [__CLASS__ . '::' . $method]);
     }
 
     // ------------------------------------------------------------------------
@@ -216,9 +217,9 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed New value on success or FALSE on failure.
      */
-    public function increment( $key, $step = 1 )
+    public function increment($key, $step = 1)
     {
-        return $this->memcached->increment( $this->prefixKey . $key, $step );
+        return $this->memcached->increment($this->prefixKey . $key, $step);
     }
 
     // ------------------------------------------------------------------------
@@ -233,9 +234,9 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed New value on success or FALSE on failure.
      */
-    public function decrement( $key, $step = 1 )
+    public function decrement($key, $step = 1)
     {
-        return $this->memcached->decrement( $this->prefixKey . $key, $step );
+        return $this->memcached->decrement($this->prefixKey . $key, $step);
     }
 
     // ------------------------------------------------------------------------
