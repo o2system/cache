@@ -1,3 +1,16 @@
+<div align="center" markdown="1">
+
+[![O2System Framework](http://o2system.id/assets/img/logo/logo-white-200px.png?logo)](http://o2system.id)
+</div>
+
+<div align="center" markdown="1">
+
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/o2system/cache/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/o2system/cache/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/o2system/cache/badges/build.png?b=master)](https://scrutinizer-ci.com/g/o2system/cache/build-status/master)
+[![Latest Stable Version](https://poser.pugx.org/o2system/cache/v/stable)](https://packagist.org/packages/o2system/cache)
+[![Total Downloads](https://poser.pugx.org/o2system/cache/downloads)](https://packagist.org/packages/o2system/cache)
+[![License](https://poser.pugx.org/o2system/cache/license)](https://packagist.org/packages/o2system/cache)
+</div>
 # O2System Cache
 O2System Cache is an Open Source Cache Management Adapters Library. This allows the O2System Framework to integrate with some of the most popular cache storage engines. All but file-based caching require specific server requirements, and a Fatal Exception will be thrown if server requirements are not met. O2System Cache is build for working more powerful within O2System Framework, but also can be used for integrated with others as standalone version with limited features.
 
