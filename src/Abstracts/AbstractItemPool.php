@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the O2System PHP Framework package.
+ * This file is part of the O2System Framework package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -38,7 +38,7 @@ abstract class AbstractItemPool implements
      *
      * @var array
      */
-    private $storage = [];
+    private $deferred = [];
 
     // ------------------------------------------------------------------------
 
@@ -49,7 +49,7 @@ abstract class AbstractItemPool implements
      *
      * @return bool True if the item was successfully removed. False if there was an error.
      *
-     * @throws \O2System\Psr\SimpleCache\InvalidArgumentException
+     * @throws \O2System\Psr\Cache\InvalidArgumentException
      *   MUST be thrown if the $key string is not a legal value.
      */
     public function delete($key)
@@ -72,7 +72,15 @@ abstract class AbstractItemPool implements
      */
     public function saveDeferred(CacheItemInterface $item)
     {
-        $this->storage[] = $item;
+        $key = spl_object_id($item);
+
+        if ( ! array_key_exists($key, $this->deferred)) {
+            $this->deferred[] = $item;
+
+            return true;
+        }
+
+        return false;
     }
 
     // ------------------------------------------------------------------------
@@ -87,16 +95,16 @@ abstract class AbstractItemPool implements
      */
     public function commit()
     {
-        $storage = $this->storage;
+        $items = $this->deferred;
 
-        foreach ($storage as $key => $item) {
+        foreach ($items as $key => $item) {
             if ($this->save($item) === true) {
-                unset($storage[ $key ]);
+                unset($items[ $key ]);
             }
         }
 
-        if (count($storage) == 0) {
-            $this->storage = [];
+        if (count($items) == 0) {
+            $this->deferred = [];
 
             return true;
         }
@@ -115,9 +123,7 @@ abstract class AbstractItemPool implements
      * @return iterable A list of key => value pairs. Cache keys that do not exist or are stale will have $default as
      *                  value.
      *
-     * @throws \O2System\Psr\SimpleCache\InvalidArgumentException
-     *   MUST be thrown if $keys is neither an array nor a Traversable,
-     *   or if any of the $keys are not a legal value.
+     * @throws \O2System\Psr\Cache\InvalidArgumentException
      */
     public function getMultiple($keys, $default = null)
     {
@@ -146,7 +152,7 @@ abstract class AbstractItemPool implements
      *
      * @return bool
      *
-     * @throws \O2System\Psr\SimpleCache\InvalidArgumentException
+     * @throws \O2System\Psr\Cache\InvalidArgumentException
      *   MUST be thrown if the $key string is not a legal value.
      */
     public function has($key)
@@ -164,7 +170,7 @@ abstract class AbstractItemPool implements
      *
      * @return mixed The value of the item from the cache, or $default in case of cache miss.
      *
-     * @throws \O2System\Psr\SimpleCache\InvalidArgumentException
+     * @throws \O2System\Psr\Cache\InvalidArgumentException
      *   MUST be thrown if the $key string is not a legal value.
      */
     public function get($key, $default = null)
@@ -187,10 +193,6 @@ abstract class AbstractItemPool implements
      *                                       for it or let the driver take care of that.
      *
      * @return bool True on success and false on failure.
-     *
-     * @throws \O2System\Psr\SimpleCache\InvalidArgumentException
-     *   MUST be thrown if $values is neither an array nor a Traversable,
-     *   or if any of the $values are not a legal value.
      */
     public function setMultiple($values, $ttl = null)
     {
@@ -217,9 +219,6 @@ abstract class AbstractItemPool implements
      *                                      for it or let the driver take care of that.
      *
      * @return bool True on success and false on failure.
-     *
-     * @throws \O2System\Psr\SimpleCache\InvalidArgumentException
-     *   MUST be thrown if the $key string is not a legal value.
      */
     public function set($key, $value, $ttl = null)
     {
@@ -235,9 +234,8 @@ abstract class AbstractItemPool implements
      *
      * @return bool True if the items were successfully removed. False if there was an error.
      *
-     * @throws \O2System\Psr\SimpleCache\InvalidArgumentException
-     *   MUST be thrown if $keys is neither an array nor a Traversable,
-     *   or if any of the $keys are not a legal value.
+     * @throws \O2System\Psr\Cache\InvalidArgumentException
+     * @throws \O2System\Spl\Exceptions\Logic\InvalidArgumentException
      */
     public function deleteMultiple($keys)
     {

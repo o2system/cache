@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the O2System PHP Framework package.
+ * This file is part of the O2System Framework package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -87,6 +87,7 @@ class Item implements CacheItemInterface
      * @param mixed|null        $value        Item value.
      * @param int|\DateInterval $expiresAfter Item expiration.
      *
+     * @throws \Exception
      * @return Item
      */
     public function __construct($key, $value = null, $expiresAfter = 300)
@@ -158,6 +159,7 @@ class Item implements CacheItemInterface
      *
      * @return static
      *   The called object.
+     * @throws \Exception
      */
     public function expiresAfter($time = null)
     {
@@ -191,6 +193,7 @@ class Item implements CacheItemInterface
      *
      * @return static
      *   The called object.
+     * @throws \Exception
      */
     public function expiresAt(\DateTimeInterface $expiration = null)
     {

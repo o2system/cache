@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the O2System PHP Framework package.
+ * This file is part of the O2System Framework package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -30,11 +30,11 @@ class Adapters extends AbstractProvider implements ValidationInterface
     /**
      * Adapters::__construct
      *
-     * @param Datastructures\Config $config
+     * @param DataStructures\Config $config
      *
      * @return Adapters
      */
-    public function __construct(Datastructures\Config $config)
+    public function __construct(DataStructures\Config $config)
     {
         if ($config->offsetExists('default')) {
             foreach ($config as $poolOffset => $poolConfig) {
@@ -53,9 +53,9 @@ class Adapters extends AbstractProvider implements ValidationInterface
      * Create Item Pool
      *
      * @param string                $poolOffset
-     * @param Datastructures\Config $poolConfig
+     * @param DataStructures\Config $poolConfig
      */
-    public function createItemPool($poolOffset, Datastructures\Config $poolConfig)
+    public function createItemPool($poolOffset, DataStructures\Config $poolConfig)
     {
         $adapterClassName = '\O2System\Cache\Adapters\\' . ucfirst($poolConfig->adapter) . '\ItemPool';
 
