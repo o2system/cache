@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the O2System PHP Framework package.
+ * This file is part of the O2System Framework package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -16,7 +16,7 @@ namespace O2System\Cache\Adapters\File;
 // ------------------------------------------------------------------------
 
 use O2System\Cache\Abstracts\AbstractAdapter;
-use O2System\Cache\Datastructures\Config;
+use O2System\Cache\DataStructures\Config;
 use O2System\Spl\Exceptions\Logic\InvalidArgumentException;
 use O2System\Spl\Exceptions\Runtime\OverflowException;
 use O2System\Spl\Info\SplDirectoryInfo;
@@ -51,7 +51,7 @@ abstract class Adapter extends AbstractAdapter
     /**
      * Adapter::__construct
      *
-     * @param \O2System\Cache\Datastructures\Config|NULL $config
+     * @param \O2System\Cache\DataStructures\Config|NULL $config
      *
      * @throws \O2System\Spl\Exceptions\Runtime\OverflowException
      */
@@ -152,7 +152,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed New value on success or FALSE on failure.
      * @throws \O2System\Spl\Exceptions\Logic\InvalidArgumentException
-     * @throws \O2System\Psr\Cache\InvalidArgumentException
+     * @throws \Psr\Cache\InvalidArgumentException
      */
     public function increment($key, $step = 1)
     {
@@ -189,7 +189,7 @@ abstract class Adapter extends AbstractAdapter
      *
      * @return mixed New value on success or FALSE on failure.
      * @throws \O2System\Spl\Exceptions\Logic\InvalidArgumentException
-     * @throws \O2System\Psr\Cache\InvalidArgumentException
+     * @throws \Psr\Cache\InvalidArgumentException
      */
     public function decrement($key, $step = 1)
     {

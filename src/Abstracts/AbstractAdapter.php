@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the O2System PHP Framework package.
+ * This file is part of the O2System Framework package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,8 +15,7 @@ namespace O2System\Cache\Abstracts;
 
 // ------------------------------------------------------------------------
 
-use O2System\Cache\Datastructures\Config;
-use O2System\Psr\Cache\CacheItemPoolAdapterInterface;
+use O2System\Cache\DataStructures\Config;
 use O2System\Spl\Exceptions\Logic\BadFunctionCall\BadDependencyCallException;
 
 /**
@@ -24,7 +23,7 @@ use O2System\Spl\Exceptions\Logic\BadFunctionCall\BadDependencyCallException;
  *
  * @package O2System\Cache\Abstracts
  */
-abstract class AbstractAdapter extends AbstractItemPool implements CacheItemPoolAdapterInterface
+abstract class AbstractAdapter extends AbstractItemPool
 {
     /**
      * AbstractAdapter::$platform
@@ -56,7 +55,7 @@ abstract class AbstractAdapter extends AbstractItemPool implements CacheItemPool
     /**
      * AbstractAdapter::__construct
      *
-     * @param \O2System\Cache\Datastructures\Config|NULL $config
+     * @param \O2System\Cache\DataStructures\Config|NULL $config
      *
      * @return AbstractAdapter
      * @throws BadDependencyCallException
