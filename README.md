@@ -1,4 +1,4 @@
-![alt text](https://www.o2system.id/assets/img/covers/cover-o2system-atom-cache.png "O2System Cache Atom")
+![alt text](https://repository-images.githubusercontent.com/68261023/b76a3300-5c9e-11ea-889b-cecbd8262547 "O2System Cache Atom")
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/o2system/cache/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/o2system/cache/?branch=master)
 [![Build Status](https://scrutinizer-ci.com/g/o2system/cache/badges/build.png?b=master)](https://scrutinizer-ci.com/g/o2system/cache/build-status/master)
